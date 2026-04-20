@@ -33,6 +33,24 @@
   --ease-out: cubic-bezier(.2, .7, .2, 1);
   --dur-1: 380ms;
   --dur-2: 700ms;
+
+  /* --------- Textures (SVG data URIs, no external requests) ---------
+     Each one is a tiny inline SVG filter → rendered once by the browser. */
+
+  /* Fine film grain — for dark hero/footer */
+  --tx-grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.08  0 0 0 0 0.07  0 0 0 0 0.06  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+
+  /* Soft paper grain — for cream sections (story, registry, FAQ) */
+  --tx-paper: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.68' numOctaves='2' seed='7'/><feColorMatrix values='0 0 0 0 0.32  0 0 0 0 0.26  0 0 0 0 0.16  0 0 0 0.28 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+
+  /* Linen weave — cross-hatched horizontal + vertical strokes for a woven paper feel */
+  --tx-linen: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8'><path d='M0 0h8M0 4h8' stroke='%23000' stroke-opacity='0.05' stroke-width='0.5'/><path d='M0 0v8M4 0v8' stroke='%23000' stroke-opacity='0.035' stroke-width='0.5'/></svg>");
+
+  /* Velvet nap — coarser grain with warm cast for the maroon section */
+  --tx-velvet: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='3' seed='11'/><feColorMatrix values='0 0 0 0 0.10  0 0 0 0 0.02  0 0 0 0 0.03  0 0 0 0.45 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+
+  /* Forest canvas — subtle warm noise tuned for the green section */
+  --tx-canvas: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.05  0 0 0 0 0.08  0 0 0 0 0.04  0 0 0 0.40 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 }
 
 /* ---------- Reset ---------- */
@@ -124,6 +142,103 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 @media (max-width: 640px) {
   .mini-nav a { padding: .4rem .7rem; font-size: .68rem; letter-spacing: .12em; }
+}
+
+/* ==========================================================================
+   SECTION TEXTURE LAYERS
+   Each section gets a subtle textured overlay so nothing looks flat.
+   Overlays are pseudo-elements so they never block text or interaction.
+   ========================================================================== */
+.hero,
+.story,
+.ceremony,
+.schedule,
+.registry,
+.faq,
+.get-in-touch {
+  position: relative;
+}
+.hero::after,
+.story::after,
+.ceremony::after,
+.schedule::after,
+.registry::after,
+.faq::after,
+.get-in-touch::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: multiply;
+}
+
+/* Section content should sit above the texture layer */
+.hero__inner,
+.hero__scroll,
+.story__container,
+.ceremony__container,
+.schedule__container,
+.registry__inner,
+.faq__container,
+.get-in-touch__container,
+.site-footer,
+.eucalyptus { position: relative; z-index: 2; }
+
+/* Cream sections — warm paper grain + linen weave */
+.story::after,
+.faq::after {
+  background-image: var(--tx-paper), var(--tx-linen);
+  background-size: 300px 300px, 8px 8px;
+  opacity: .85;
+}
+.registry::after {
+  background-image: var(--tx-paper), var(--tx-linen);
+  background-size: 300px 300px, 8px 8px;
+  opacity: .85;
+}
+
+/* Forest green — warm canvas grain */
+.ceremony::after {
+  background-image: var(--tx-canvas);
+  background-size: 320px 320px;
+  mix-blend-mode: overlay;
+  opacity: .75;
+}
+
+/* Maroon — velvet nap with a radial light sweep */
+.schedule::after {
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(255,205,160,.09), transparent 55%),
+    var(--tx-velvet);
+  background-size: auto, 320px 320px;
+  mix-blend-mode: overlay;
+  opacity: .85;
+}
+
+/* Hero + Get-In-Touch — fine film grain over the photo (between photo and text) */
+.hero::after,
+.get-in-touch::after {
+  background-image: var(--tx-grain);
+  background-size: 260px 260px;
+  mix-blend-mode: overlay;
+  opacity: .55;
+}
+
+/* Cards pick up a whisper of the canvas so they don't feel flat on hover */
+.card {
+  background-image: var(--tx-canvas);
+  background-size: 320px 320px;
+  background-blend-mode: overlay;
+}
+
+/* Subtle gold vignette at the edges of the maroon schedule — depth cue */
+.schedule::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.35) 100%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* ==========================================================================
