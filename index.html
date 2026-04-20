@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#4C5B3A" />
+  <title>Matthew &amp; Catalina &mdash; May 21, 2027</title>
+  <meta name="description" content="Join us to celebrate the wedding of Matthew & Catalina on May 21, 2027 in Austin, Texas." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Pinyon+Script&family=Allura&display=swap" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ======================= FLOATING MINI NAV ======================= -->
+  <nav id="mini-nav" class="mini-nav" aria-label="Section navigation">
+    <a href="#story">Story</a>
+    <a href="#ceremony">Ceremony</a>
+    <a href="#schedule">Schedule</a>
+    <a href="#registry">Registry</a>
+    <a href="#rsvp" class="mini-nav__cta">RSVP</a>
+  </nav>
+
+  <!-- ======================= HERO ======================= -->
+  <header id="hero" class="hero">
+    <div class="hero__photo" role="img" aria-label="Matthew and Catalina walking together on a winter evening"></div>
+    <div class="hero__overlay"></div>
+
+    <!-- decorative lantern post silhouettes -->
+    <svg class="hero__lantern hero__lantern--left" viewBox="0 0 40 260" aria-hidden="true">
+      <path d="M20 0 L20 260 M5 8 L35 8 M8 14 C8 28 32 28 32 14 Z" stroke="currentColor" stroke-width="1" fill="none"/>
+    </svg>
+    <svg class="hero__lantern hero__lantern--right" viewBox="0 0 40 260" aria-hidden="true">
+      <path d="M20 0 L20 260 M5 8 L35 8 M8 14 C8 28 32 28 32 14 Z" stroke="currentColor" stroke-width="1" fill="none"/>
+    </svg>
+
+    <div class="hero__inner">
+      <h1 class="hero__title">
+        <span class="hero__name">MATTHEW</span>
+        <span class="hero__amp" aria-hidden="true">&amp;</span>
+        <span class="sr-only">and</span>
+        <span class="hero__name">CATALINA</span>
+      </h1>
+
+      <p class="hero__date">MAY 21, 2027</p>
+
+      <div id="countdown" class="countdown" aria-live="polite">
+        <div class="countdown__block"><span class="countdown__num" data-unit="days">000</span><span class="countdown__label">Days</span></div>
+        <span class="countdown__sep">:</span>
+        <div class="countdown__block"><span class="countdown__num" data-unit="hours">00</span><span class="countdown__label">Hours</span></div>
+        <span class="countdown__sep">:</span>
+        <div class="countdown__block"><span class="countdown__num" data-unit="minutes">00</span><span class="countdown__label">Minutes</span></div>
+        <span class="countdown__sep">:</span>
+        <div class="countdown__block"><span class="countdown__num" data-unit="seconds">00</span><span class="countdown__label">Seconds</span></div>
+      </div>
+    </div>
+
+    <a href="#story" class="hero__scroll" aria-label="Scroll to our love story">
+      <span class="hero__scroll-line"></span>
+    </a>
+  </header>
+
+  <!-- ======================= OUR LOVE STORY ======================= -->
+  <section id="story" class="story">
+    <div class="story__container">
+      <h2 class="story__title reveal">
+        <span>OUR</span><span>LOVE</span><span>STORY</span>
+      </h2>
+
+      <!-- Chapter tabs -->
+      <div class="story__tabs reveal" role="tablist" aria-label="Love story chapters">
+        <button class="story__tab is-active" role="tab" aria-selected="true" aria-controls="chapter-1" id="tab-1" data-chapter="1">The Meeting</button>
+        <button class="story__tab" role="tab" aria-selected="false" aria-controls="chapter-2" id="tab-2" data-chapter="2">Finding Love</button>
+        <button class="story__tab" role="tab" aria-selected="false" aria-controls="chapter-3" id="tab-3" data-chapter="3">The Proposal</button>
+      </div>
+
+      <!-- Chapter panels -->
+      <div class="story__panels">
+
+        <article class="story__panel is-active" role="tabpanel" id="chapter-1" aria-labelledby="tab-1" data-chapter="1">
+          <div class="story__photo story__photo--1 reveal" aria-hidden="true"></div>
+          <div class="story__text reveal">
+            <p>Matthew and Catalina met in 2021 in the most <em>scary</em> way possible &mdash; an online poetry class during COVID. Matthew was on campus at <strong>Our Lady of the Lake University</strong> for golf, while Catalina was taking classes remotely from home in Austin. During the icy winter storm, Catalina messaged Matthew for help with their poetry homework.</p>
+            <p>In the time, they only knew each other through Instagram, but that one message turned into something neither of them expected. When classes returned to campus in August, Catalina and Matthew finally met in person.</p>
+          </div>
+        </article>
+
+        <article class="story__panel" role="tabpanel" id="chapter-2" aria-labelledby="tab-2" data-chapter="2" hidden>
+          <div class="story__photo story__photo--2 reveal" aria-hidden="true"></div>
+          <div class="story__text reveal">
+            <p>What was supposed to be a simple hangout turned into them staying up until 2 a.m., just talking and getting to know each other. After countless questions, laughs, and late-night conversations, Catalina had a feeling Matthew was someone special. And when she opened her apartment door and saw him for the first time, she realized he truly checked all the boxes &mdash; a detail you can't exactly tell over Instagram: dark, tall, handsome, with a calm confidence that made everything feel easy.</p>
+            <p>After six months of being inseparable (and Catalina's persistence despite Matthew's insistence that he <em>&ldquo;wasn't looking for a relationship&rdquo;</em>), Catalina finally gave him an ultimatum: <em>&ldquo;I can't be your friend anymore unless we're together.&rdquo;</em> Not long after, Matthew asked her to be his girlfriend.</p>
+          </div>
+        </article>
+
+        <article class="story__panel" role="tabpanel" id="chapter-3" aria-labelledby="tab-3" data-chapter="3" hidden>
+          <div class="story__photo story__photo--3 reveal" aria-hidden="true"></div>
+          <div class="story__text reveal">
+            <p>Three years later, on <strong>March 1, 2026</strong>, Matthew proposed in <strong>Central Park in New York City</strong>. As if the moment wasn't magical enough, it started snowing at the perfect time, turning their proposal into something straight out of a movie and a memory they'll never forget.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= CEREMONY + RECEPTION ======================= -->
+  <section id="ceremony" class="ceremony">
+    <div class="ceremony__container">
+
+      <h2 class="ceremony__title reveal"><span class="script">The</span><br/><span class="script script--lg">Ceremony</span></h2>
+
+      <div class="card-row">
+        <article class="card reveal">
+          <svg class="card__icon" viewBox="0 0 80 80" aria-hidden="true">
+            <path d="M40 8 L40 24 M32 16 L48 16" stroke="currentColor" stroke-width="1.2" fill="none"/>
+            <path d="M20 72 L20 38 L40 22 L60 38 L60 72 Z" stroke="currentColor" stroke-width="1.2" fill="none"/>
+            <rect x="36" y="52" width="8" height="20" stroke="currentColor" stroke-width="1" fill="none"/>
+            <circle cx="40" cy="42" r="3" stroke="currentColor" stroke-width="1" fill="none"/>
+            <path d="M28 48 L28 60 M52 48 L52 60" stroke="currentColor" stroke-width="1" fill="none"/>
+          </svg>
+          <h3 class="card__title">Ceremony Venue</h3>
+          <p class="card__body">
+            <span class="card__highlight">2:30 PM &ndash; 3:30 PM</span><br/>
+            Saint Mary's Cathedral<br/>
+            203 E 10th St. Austin, TX 78701
+          </p>
+        </article>
+
+        <article class="card reveal">
+          <svg class="card__icon" viewBox="0 0 80 80" aria-hidden="true">
+            <path d="M40 12 L32 24 L40 36 L48 24 Z" stroke="currentColor" stroke-width="1.2" fill="none"/>
+            <path d="M32 24 L20 44 L20 72 L60 72 L60 44 L48 24" stroke="currentColor" stroke-width="1.2" fill="none"/>
+            <path d="M40 36 L40 72" stroke="currentColor" stroke-width="1" fill="none"/>
+            <path d="M34 48 L40 44 L46 48" stroke="currentColor" stroke-width="1" fill="none"/>
+          </svg>
+          <h3 class="card__title">Attire</h3>
+          <p class="card__body">
+            <span class="card__highlight">Black Tie</span><br/>
+            As we gather for our wedding in a Roman Catholic Church, we kindly ask that everyone dress respectfully to honor the sacred setting. Your thoughtful attire will help make our day even more special.
+          </p>
+        </article>
+
+        <article class="card reveal">
+          <svg class="card__icon" viewBox="0 0 80 80" aria-hidden="true">
+            <circle cx="40" cy="30" r="14" stroke="currentColor" stroke-width="1.2" fill="none"/>
+            <path d="M40 44 L40 72 M32 56 L48 56" stroke="currentColor" stroke-width="1" fill="none"/>
+            <path d="M28 24 C26 20 30 18 32 22 M48 22 C50 18 54 20 52 24 M40 18 C38 14 42 12 44 16" stroke="currentColor" stroke-width="1" fill="none"/>
+            <circle cx="32" cy="30" r="2" fill="currentColor"/>
+            <circle cx="40" cy="26" r="2" fill="currentColor"/>
+            <circle cx="48" cy="30" r="2" fill="currentColor"/>
+          </svg>
+          <h3 class="card__title">Post-Ceremony</h3>
+          <p class="card__body">
+            While we (the wedding party) take photos, and love to give you time to refresh your makeup, grab a hor d'oeuvre bite, and get ready for the reception.
+          </p>
+        </article>
+      </div>
+
+      <h2 class="ceremony__title ceremony__title--small reveal"><span class="script">The</span><br/><span class="script script--lg">Reception</span></h2>
+
+      <div class="card-row card-row--two">
+        <article class="card reveal">
+          <svg class="card__icon" viewBox="0 0 80 80" aria-hidden="true">
+            <path d="M12 40 L40 18 L68 40" stroke="currentColor" stroke-width="1.2" fill="none"/>
+            <path d="M16 40 L16 68 L64 68 L64 40" stroke="currentColor" stroke-width="1.2" fill="none"/>
+            <rect x="34" y="48" width="12" height="20" stroke="currentColor" stroke-width="1" fill="none"/>
+            <path d="M40 18 L40 10 M36 10 L44 10" stroke="currentColor" stroke-width="1" fill="none"/>
+            <path d="M24 52 L28 52 M52 52 L56 52" stroke="currentColor" stroke-width="1" fill="none"/>
+          </svg>
+          <h3 class="card__title">Reception Venue</h3>
+          <p class="card__body">
+            <span class="card__highlight">4:30 PM &ndash; 11 PM</span><br/>
+            Saint Mary's Cathedral<br/>
+            203 E 10th St. Austin, TX 78701
+          </p>
+        </article>
+
+        <article class="card reveal">
+          <svg class="card__icon" viewBox="0 0 80 80" aria-hidden="true">
+            <path d="M40 14 L34 20 L36 28 L30 36 L32 46 L24 66 L56 66 L48 46 L50 36 L44 28 L46 20 Z" stroke="currentColor" stroke-width="1.2" fill="none"/>
+            <path d="M36 28 L44 28 M32 46 L48 46" stroke="currentColor" stroke-width="1" fill="none"/>
+            <circle cx="40" cy="14" r="2" stroke="currentColor" stroke-width="1" fill="none"/>
+          </svg>
+          <h3 class="card__title">Attire</h3>
+          <p class="card__body">
+            Gentlemen are encouraged to wear tuxedos while ladies may opt for elegant evening gowns or formal dresses. We can't wait to celebrate with everyone dressed to the nines!
+          </p>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================= SCHEDULE OF EVENTS ======================= -->
+  <section id="schedule" class="schedule">
+    <div class="schedule__container">
+      <h2 class="schedule__title reveal"><span class="script script--lg">Schedule of Events</span></h2>
+
+      <div class="schedule__grid">
+        <ol class="schedule__list">
+          <li class="schedule__row reveal"><span class="schedule__time">1:30 PM</span><span class="schedule__event">Arrival &amp; Welcome</span></li>
+          <li class="schedule__row reveal"><span class="schedule__time">2:00 PM</span><span class="schedule__event">Ceremony Begins</span></li>
+          <li class="schedule__row reveal"><span class="schedule__time">4:00 PM</span><span class="schedule__event">Wedding Party Photo Session &middot; Guest Meets</span></li>
+          <li class="schedule__row reveal"><span class="schedule__time">4:30 PM</span><span class="schedule__event">Reception Hall Opens &middot; Cocktail Hour</span></li>
+          <li class="schedule__row reveal"><span class="schedule__time">5:30 PM</span><span class="schedule__event">Grand Entrance</span></li>
+          <li class="schedule__row reveal"><span class="schedule__time">6:45 PM</span><span class="schedule__event">Blessing + Dinner Service</span></li>
+          <li class="schedule__row reveal"><span class="schedule__time">6:45 PM</span><span class="schedule__event">Wedding Party Toasts</span></li>
+          <li class="schedule__row reveal"><span class="schedule__time">7:00 PM</span><span class="schedule__event">First Dance</span></li>
+          <li class="schedule__row reveal"><span class="schedule__time">7:15 PM</span><span class="schedule__event">Father-Daughter Dance</span></li>
+          <li class="schedule__row reveal"><span class="schedule__time">7:30 PM</span><span class="schedule__event">Mother-Son Dance</span></li>
+          <li class="schedule__row reveal"><span class="schedule__time">7:35 PM</span><span class="schedule__event">Open Dancing Begins</span></li>
+          <li class="schedule__row reveal"><span class="schedule__time">8:30 PM</span><span class="schedule__event">Cake Cutting</span></li>
+          <li class="schedule__row reveal"><span class="schedule__time">11:00 PM</span><span class="schedule__event">Late Night Snack</span></li>
+        </ol>
+
+        <div class="schedule__photo reveal" role="img" aria-label="A floral centerpiece at the reception"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= REGISTRY ======================= -->
+  <section id="registry" class="registry">
+    <!-- decorative eucalyptus branches (parallax) -->
+    <svg class="eucalyptus eucalyptus--tl" viewBox="0 0 400 300" aria-hidden="true">
+      <g stroke="#6B6A3F" stroke-width="1.5" fill="none" opacity="0.55">
+        <path d="M20 20 Q140 80 280 180"/>
+        <g fill="#6B6A3F" stroke="none">
+          <ellipse cx="60" cy="38" rx="18" ry="9" transform="rotate(25 60 38)"/>
+          <ellipse cx="95" cy="52" rx="20" ry="10" transform="rotate(28 95 52)"/>
+          <ellipse cx="130" cy="68" rx="22" ry="11" transform="rotate(30 130 68)"/>
+          <ellipse cx="165" cy="88" rx="22" ry="11" transform="rotate(34 165 88)"/>
+          <ellipse cx="195" cy="108" rx="22" ry="11" transform="rotate(38 195 108)"/>
+          <ellipse cx="225" cy="132" rx="22" ry="11" transform="rotate(42 225 132)"/>
+          <ellipse cx="250" cy="156" rx="20" ry="10" transform="rotate(48 250 156)"/>
+        </g>
+      </g>
+    </svg>
+
+    <svg class="eucalyptus eucalyptus--br" viewBox="0 0 400 300" aria-hidden="true">
+      <g stroke="#6B6A3F" stroke-width="1.5" fill="none" opacity="0.55">
+        <path d="M380 280 Q240 200 100 80"/>
+        <g fill="#6B6A3F" stroke="none">
+          <ellipse cx="340" cy="260" rx="18" ry="9" transform="rotate(-25 340 260)"/>
+          <ellipse cx="300" cy="240" rx="20" ry="10" transform="rotate(-28 300 240)"/>
+          <ellipse cx="260" cy="218" rx="22" ry="11" transform="rotate(-32 260 218)"/>
+          <ellipse cx="225" cy="195" rx="22" ry="11" transform="rotate(-36 225 195)"/>
+          <ellipse cx="190" cy="168" rx="22" ry="11" transform="rotate(-40 190 168)"/>
+          <ellipse cx="160" cy="140" rx="22" ry="11" transform="rotate(-44 160 140)"/>
+          <ellipse cx="135" cy="112" rx="20" ry="10" transform="rotate(-48 135 112)"/>
+        </g>
+      </g>
+    </svg>
+
+    <div class="registry__inner reveal">
+      <h2 class="registry__title">Your presence is truly the best gift we could ask for.</h2>
+      <p class="registry__body">
+        But if you feel called to give a little something, we've put together a registry with some of our most wished-for items, setting us up for our future home, honeymoon, and family.
+      </p>
+      <p class="registry__body">
+        We love you and your support as we begin our married life &mdash; a contribution to our future would mean so much.
+      </p>
+      <p class="registry__body registry__body--emph">Thank you for being part of this milestone with us.</p>
+
+      <a class="btn btn--pill btn--registry" href="#" data-registry-url="#" aria-label="Open our wedding registry">
+        OUR REGISTRY
+      </a>
+    </div>
+  </section>
+
+  <!-- ======================= FAQ ======================= -->
+  <section id="faq" class="faq">
+    <div class="faq__container">
+      <h2 class="faq__title reveal">
+        <span>FREQUENTLY</span>
+        <span>ASKED</span>
+        <span>QUESTIONS</span>
+      </h2>
+
+      <div class="faq__list">
+        <details class="faq__item reveal" open>
+          <summary class="faq__q">What time should I arrive?</summary>
+          <div class="faq__a">
+            <p>We recommend getting to the church at least 30 minutes before 2 PM so you have time to settle in before the ceremony begins. Mass will begin right at 2 PM.</p>
+          </div>
+        </details>
+
+        <details class="faq__item reveal">
+          <summary class="faq__q">Can I bring a +1?</summary>
+          <div class="faq__a">
+            <p>Access is a small and intimate gathering; we kindly ask that only close family and friends attend unless stated otherwise. Please refer to your invitation for details.</p>
+          </div>
+        </details>
+
+        <details class="faq__item reveal">
+          <summary class="faq__q">Are kids allowed?</summary>
+          <div class="faq__a">
+            <p>While we absolutely adore your little ones, we're kindly keeping our wedding celebration (ceremony and reception) an adults-only evening to maintain a calm and comfortable atmosphere during the ceremony and reception.</p>
+          </div>
+        </details>
+
+        <details class="faq__item reveal">
+          <summary class="faq__q">Where should I park?</summary>
+          <div class="faq__a">
+            <p>There is paid parking near the venue and a few free street-parking spots available. In the first approaches, we'll send the exact location and parking details via SMS. PWD-friendly parking is available. If you need assistance or special arrangements, please don't hesitate to let us know.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= GET IN TOUCH + RSVP ======================= -->
+  <section id="rsvp" class="get-in-touch">
+    <div class="get-in-touch__photo" role="img" aria-label="Matthew and Catalina at golden hour"></div>
+    <div class="get-in-touch__overlay"></div>
+
+    <div class="get-in-touch__container">
+      <h2 class="get-in-touch__title reveal">GET IN TOUCH</h2>
+
+      <div class="contact-grid">
+        <a class="contact reveal" href="mailto:miguel@matthewandcatalina.com">
+          <span class="contact__name">Miguel Ramos</span>
+          <span class="contact__email">miguel@matthewandcatalina.com</span>
+        </a>
+        <a class="contact reveal" href="mailto:andrea@matthewandcatalina.com">
+          <span class="contact__name">Andrea de Guerlan</span>
+          <span class="contact__email">andrea@matthewandcatalina.com</span>
+        </a>
+      </div>
+
+      <button class="btn btn--pill btn--rsvp reveal" type="button" id="open-rsvp">RSVP</button>
+    </div>
+
+    <footer class="site-footer">
+      <p>Matthew &amp; Catalina &middot; May 21, 2027 &middot; Austin, TX</p>
+    </footer>
+  </section>
+
+  <!-- ======================= RSVP MODAL ======================= -->
+  <div class="modal" id="rsvp-modal" role="dialog" aria-labelledby="rsvp-modal-title" aria-modal="true" hidden>
+    <div class="modal__backdrop" data-close-modal></div>
+    <div class="modal__panel">
+      <button class="modal__close" type="button" data-close-modal aria-label="Close">&times;</button>
+      <h2 class="modal__title script script--lg" id="rsvp-modal-title">Kindly Respond</h2>
+      <p class="modal__subtitle">Please RSVP by April 21, 2027.</p>
+
+      <form class="rsvp-form" id="rsvp-form" action="mailto:rsvp@matthewandcatalina.com" method="post" enctype="text/plain">
+        <div class="field">
+          <label for="rsvp-name">Full Name</label>
+          <input id="rsvp-name" name="Name" type="text" required autocomplete="name" />
+        </div>
+
+        <fieldset class="field">
+          <legend>Will you attend?</legend>
+          <label class="radio"><input type="radio" name="Attending" value="Joyfully Accepting" required /> <span>Joyfully Accepting</span></label>
+          <label class="radio"><input type="radio" name="Attending" value="Regretfully Declining" /> <span>Regretfully Declining</span></label>
+        </fieldset>
+
+        <div class="field">
+          <label for="rsvp-guests">Number of Guests</label>
+          <input id="rsvp-guests" name="Guests" type="number" min="1" max="6" value="1" />
+        </div>
+
+        <div class="field">
+          <label for="rsvp-diet">Dietary Notes / Allergies</label>
+          <input id="rsvp-diet" name="Dietary" type="text" placeholder="Optional" />
+        </div>
+
+        <div class="field">
+          <label for="rsvp-song">Song Request</label>
+          <input id="rsvp-song" name="Song" type="text" placeholder="A song that'll get you on the dance floor" />
+        </div>
+
+        <div class="field">
+          <label for="rsvp-note">A Note for Matthew &amp; Catalina</label>
+          <textarea id="rsvp-note" name="Note" rows="3" placeholder="Optional"></textarea>
+        </div>
+
+        <button class="btn btn--pill btn--submit" type="submit">Send RSVP</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/countdown.js" defer></script>
+  <script src="js/scroll-reveal.js" defer></script>
+  <script src="js/story-timeline.js" defer></script>
+  <script src="js/faq-accordion.js" defer></script>
+  <script src="js/rsvp-modal.js" defer></script>
+  <script src="js/mini-nav.js" defer></script>
+</body>
+</html>
