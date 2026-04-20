@@ -70,40 +70,55 @@
         <span>OUR</span><span>LOVE</span><span>STORY</span>
       </h2>
 
-      <!-- Chapter tabs -->
-      <div class="story__tabs reveal" role="tablist" aria-label="Love story chapters">
-        <button class="story__tab is-active" role="tab" aria-selected="true" aria-controls="chapter-1" id="tab-1" data-chapter="1">The Meeting</button>
-        <button class="story__tab" role="tab" aria-selected="false" aria-controls="chapter-2" id="tab-2" data-chapter="2">Finding Love</button>
-        <button class="story__tab" role="tab" aria-selected="false" aria-controls="chapter-3" id="tab-3" data-chapter="3">The Proposal</button>
-      </div>
+      <ol class="timeline" aria-label="Our love story, told as a timeline">
 
-      <!-- Chapter panels -->
-      <div class="story__panels">
-
-        <article class="story__panel is-active" role="tabpanel" id="chapter-1" aria-labelledby="tab-1" data-chapter="1">
-          <div class="story__photo story__photo--1 reveal" aria-hidden="true"></div>
-          <div class="story__text reveal">
-            <p>Matthew and Catalina met in 2021 in the most <em>scary</em> way possible &mdash; an online poetry class during COVID. Matthew was on campus at <strong>Our Lady of the Lake University</strong> for golf, while Catalina was taking classes remotely from home in Austin. During the icy winter storm, Catalina messaged Matthew for help with their poetry homework.</p>
-            <p>In the time, they only knew each other through Instagram, but that one message turned into something neither of them expected. When classes returned to campus in August, Catalina and Matthew finally met in person.</p>
+        <li class="timeline__entry timeline__entry--right reveal">
+          <div class="timeline__marker" aria-hidden="true"><span>2021</span></div>
+          <div class="timeline__card">
+            <div class="timeline__photo timeline__photo--1" role="img" aria-label="Matthew and Catalina meeting for the first time"></div>
+            <div class="timeline__body">
+              <p class="timeline__era">Winter 2021 &middot; Austin, TX</p>
+              <h3 class="timeline__title">The Meeting</h3>
+              <p>Matthew and Catalina met in 2021 in the most <em>scary</em> way possible &mdash; an online poetry class during COVID. Matthew was on campus at <strong>Our Lady of the Lake University</strong> for golf, while Catalina was taking classes remotely from home in Austin. During the icy winter storm, Catalina messaged Matthew for help with their poetry homework.</p>
+              <p>At the time, they only knew each other through Instagram, but that one message turned into something neither of them expected. When classes returned to campus in August, Catalina and Matthew finally met in person.</p>
+            </div>
           </div>
-        </article>
+        </li>
 
-        <article class="story__panel" role="tabpanel" id="chapter-2" aria-labelledby="tab-2" data-chapter="2" hidden>
-          <div class="story__photo story__photo--2 reveal" aria-hidden="true"></div>
-          <div class="story__text reveal">
-            <p>What was supposed to be a simple hangout turned into them staying up until 2 a.m., just talking and getting to know each other. After countless questions, laughs, and late-night conversations, Catalina had a feeling Matthew was someone special. And when she opened her apartment door and saw him for the first time, she realized he truly checked all the boxes &mdash; a detail you can't exactly tell over Instagram: dark, tall, handsome, with a calm confidence that made everything feel easy.</p>
-            <p>After six months of being inseparable (and Catalina's persistence despite Matthew's insistence that he <em>&ldquo;wasn't looking for a relationship&rdquo;</em>), Catalina finally gave him an ultimatum: <em>&ldquo;I can't be your friend anymore unless we're together.&rdquo;</em> Not long after, Matthew asked her to be his girlfriend.</p>
+        <li class="timeline__entry timeline__entry--left reveal">
+          <div class="timeline__marker" aria-hidden="true"><span>2022</span></div>
+          <div class="timeline__card">
+            <div class="timeline__photo timeline__photo--2" role="img" aria-label="Matthew and Catalina falling in love"></div>
+            <div class="timeline__body">
+              <p class="timeline__era">2022 &middot; Falling in Love</p>
+              <h3 class="timeline__title">Finding Love</h3>
+              <p>What was supposed to be a simple hangout turned into them staying up until 2 a.m., just talking and getting to know each other. After countless questions, laughs, and late-night conversations, Catalina had a feeling Matthew was someone special. And when she opened her apartment door and saw him for the first time, she realized he truly checked all the boxes &mdash; a detail you can't exactly tell over Instagram: dark, tall, handsome, with a calm confidence that made everything feel easy.</p>
+              <p>After six months of being inseparable (and Catalina's persistence despite Matthew's insistence that he <em>&ldquo;wasn't looking for a relationship&rdquo;</em>), Catalina finally gave him an ultimatum: <em>&ldquo;I can't be your friend anymore unless we're together.&rdquo;</em> Not long after, Matthew asked her to be his girlfriend.</p>
+            </div>
           </div>
-        </article>
+        </li>
 
-        <article class="story__panel" role="tabpanel" id="chapter-3" aria-labelledby="tab-3" data-chapter="3" hidden>
-          <div class="story__photo story__photo--3 reveal" aria-hidden="true"></div>
-          <div class="story__text reveal">
-            <p>Three years later, on <strong>March 1, 2026</strong>, Matthew proposed in <strong>Central Park in New York City</strong>. As if the moment wasn't magical enough, it started snowing at the perfect time, turning their proposal into something straight out of a movie and a memory they'll never forget.</p>
+        <li class="timeline__entry timeline__entry--right reveal">
+          <div class="timeline__marker timeline__marker--highlight" aria-hidden="true"><span>March&nbsp;1, 2026</span></div>
+          <div class="timeline__card">
+            <div class="timeline__photo timeline__photo--3" role="img" aria-label="The proposal in Central Park"></div>
+            <div class="timeline__body">
+              <p class="timeline__era">Central Park &middot; New York City</p>
+              <h3 class="timeline__title">The Proposal</h3>
+              <p>Three years later, on <strong>March 1, 2026</strong>, Matthew proposed in <strong>Central Park in New York City</strong>. As if the moment wasn't magical enough, it started snowing at the perfect time, turning their proposal into something straight out of a movie and a memory they'll never forget.</p>
+            </div>
           </div>
-        </article>
+        </li>
 
-      </div>
+        <li class="timeline__entry timeline__entry--capstone reveal">
+          <div class="timeline__marker timeline__marker--capstone" aria-hidden="true"><span>May&nbsp;21, 2027</span></div>
+          <div class="timeline__card timeline__card--capstone">
+            <p class="timeline__era">The Wedding</p>
+            <h3 class="timeline__title script script--lg">&amp; forever begins&hellip;</h3>
+          </div>
+        </li>
+
+      </ol>
     </div>
   </section>
 
@@ -174,8 +189,8 @@
           <h3 class="card__title">Reception Venue</h3>
           <p class="card__body">
             <span class="card__highlight">4:30 PM &ndash; 11 PM</span><br/>
-            Saint Mary's Cathedral<br/>
-            203 E 10th St. Austin, TX 78701
+            Stonehouse Villa<br/>
+            Driftwood, TX
           </p>
         </article>
 
@@ -321,13 +336,9 @@
       <h2 class="get-in-touch__title reveal">GET IN TOUCH</h2>
 
       <div class="contact-grid">
-        <a class="contact reveal" href="mailto:miguel@matthewandcatalina.com">
-          <span class="contact__name">Miguel Ramos</span>
-          <span class="contact__email">miguel@matthewandcatalina.com</span>
-        </a>
-        <a class="contact reveal" href="mailto:andrea@matthewandcatalina.com">
-          <span class="contact__name">Andrea de Guerlan</span>
-          <span class="contact__email">andrea@matthewandcatalina.com</span>
+        <a class="contact reveal" href="mailto:catalinamatthewcantu@gmail.com">
+          <span class="contact__name">Matthew &amp; Catalina</span>
+          <span class="contact__email">catalinamatthewcantu@gmail.com</span>
         </a>
       </div>
 
@@ -347,7 +358,7 @@
       <h2 class="modal__title script script--lg" id="rsvp-modal-title">Kindly Respond</h2>
       <p class="modal__subtitle">Please RSVP by April 21, 2027.</p>
 
-      <form class="rsvp-form" id="rsvp-form" action="mailto:rsvp@matthewandcatalina.com" method="post" enctype="text/plain">
+      <form class="rsvp-form" id="rsvp-form" action="mailto:catalinamatthewcantu@gmail.com" method="post" enctype="text/plain">
         <div class="field">
           <label for="rsvp-name">Full Name</label>
           <input id="rsvp-name" name="Name" type="text" required autocomplete="name" />
@@ -386,7 +397,6 @@
 
   <script src="js/countdown.js" defer></script>
   <script src="js/scroll-reveal.js" defer></script>
-  <script src="js/story-timeline.js" defer></script>
   <script src="js/faq-accordion.js" defer></script>
   <script src="js/rsvp-modal.js" defer></script>
   <script src="js/mini-nav.js" defer></script>
