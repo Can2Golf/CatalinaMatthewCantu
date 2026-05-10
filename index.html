@@ -35,52 +35,68 @@
   </div>
 
   <!-- =================================================================
-       SECTION 1 — CINEMATIC INTRO
+       SECTION 1 — VIDEO HERO
+       Video tag with poster fallback. Drop in real footage by adding a
+       <source> element below.
        ================================================================= -->
-  <section id="intro" class="intro" aria-label="Cinematic opening">
-    <!-- Aurora-borealis hue-shifting layer behind everything -->
-    <div class="intro__aurora" aria-hidden="true"></div>
-    <canvas id="intro-particles" class="intro__particles" aria-hidden="true"></canvas>
-    <!-- One-shot diagonal gold light beam -->
-    <div class="intro__sweep" aria-hidden="true"></div>
+  <header id="hero" class="hero-video">
+    <video class="hero-video__bg" id="hero-video"
+           poster="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2400&q=85"
+           autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+      <!-- Replace placeholder source with real wedding footage when ready -->
+      <source src="https://assets.mixkit.co/videos/4793/4793-720.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-video__overlay" aria-hidden="true"></div>
 
-    <div class="intro__content">
-      <h1 class="intro__names">
-        <span class="intro__name" data-letters="MATTHEW" aria-label="Matthew"></span>
-        <span class="intro__amp" aria-hidden="true">&amp;</span>
-        <span class="sr-only">and</span>
-        <span class="intro__name intro__name--script" data-handwrite="Catalina" aria-label="Catalina"></span>
+    <div class="hero-video__copy">
+      <p class="hero-video__eyebrow">A Love Story · May 21, 2027</p>
+      <h1 class="hero-video__title">
+        <span class="hero-video__line">Matthew</span>
+        <span class="hero-video__amp" aria-hidden="true">&amp;</span>
+        <span class="hero-video__line">Catalina</span>
       </h1>
-
-      <div class="intro__divider" aria-hidden="true">
-        <span class="intro__divider-line"></span>
-        <span class="intro__divider-diamond"></span>
-        <span class="intro__divider-line"></span>
-      </div>
-
-      <p class="intro__subtitle">A Love Story Written Around the World</p>
-
-      <p class="intro__meta">
-        <span>The Twenty&#x2011;First of May</span>
-        <span class="intro__meta-dot" aria-hidden="true"></span>
-        <span>Two Thousand &amp; Twenty&#x2011;Seven</span>
-      </p>
-      <p class="intro__meta intro__meta--small">Stonehouse Villa &middot; Driftwood, Texas</p>
-
-      <button class="btn btn--gold-outline btn--pulse" id="intro-cta" type="button">
-        <span class="btn__label">Begin Our Story</span>
-      </button>
+      <p class="hero-video__meta">Stonehouse Villa &middot; Driftwood, Texas</p>
     </div>
 
-    <div class="intro__vignette" aria-hidden="true"></div>
+    <a class="hero-video__scroll" href="#globe" aria-label="Scroll to our story">
+      <span class="hero-video__scroll-label">Scroll</span>
+      <span class="hero-video__scroll-line"></span>
+    </a>
 
-    <!-- Theater curtains — cover everything at start, animate apart -->
-    <div class="curtain curtain--left"  aria-hidden="true"><span class="curtain__edge"></span></div>
-    <div class="curtain curtain--right" aria-hidden="true"><span class="curtain__edge"></span></div>
-
-    <!-- White flash for shatter exit -->
-    <div class="intro__flash" aria-hidden="true"></div>
-  </section>
+    <!-- Floating thumbnail video cards animating in from the right -->
+    <aside class="hero-thumbs" aria-label="Featured moments">
+      <article class="hero-thumb" data-thumb="1">
+        <video poster="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=800&q=80"
+               autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+          <source src="https://assets.mixkit.co/videos/4793/4793-720.mp4" type="video/mp4" />
+        </video>
+        <div class="hero-thumb__label">
+          <span class="hero-thumb__num">01</span>
+          <span class="hero-thumb__title">The Proposal</span>
+        </div>
+      </article>
+      <article class="hero-thumb" data-thumb="2">
+        <video poster="https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=800&q=80"
+               autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+          <source src="https://assets.mixkit.co/videos/4793/4793-720.mp4" type="video/mp4" />
+        </video>
+        <div class="hero-thumb__label">
+          <span class="hero-thumb__num">02</span>
+          <span class="hero-thumb__title">Engagement</span>
+        </div>
+      </article>
+      <article class="hero-thumb" data-thumb="3">
+        <video poster="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80"
+               autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+          <source src="https://assets.mixkit.co/videos/4793/4793-720.mp4" type="video/mp4" />
+        </video>
+        <div class="hero-thumb__label">
+          <span class="hero-thumb__num">03</span>
+          <span class="hero-thumb__title">Save the Date</span>
+        </div>
+      </article>
+    </aside>
+  </header>
 
   <!-- =================================================================
        SECTION 2 — INTERACTIVE 3D GLOBE
@@ -154,7 +170,187 @@
   </div>
 
   <!-- =================================================================
-       SECTION 4 — SAVE THE DATE / WEDDING DETAILS
+       SECTION 4 — WEDDING DETAILS (forest green, icon rows, polaroid)
+       ================================================================= -->
+  <section id="wedding-details" class="details">
+    <div class="details__inner">
+      <header class="details__header">
+        <p class="eyebrow eyebrow--cream">The Particulars</p>
+        <h2>Wedding Details</h2>
+      </header>
+
+      <!-- Polaroid floats in from the left at -10deg on scroll -->
+      <figure class="polaroid" aria-hidden="true">
+        <div class="polaroid__photo" style="background-image: url('https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=900&q=80')"></div>
+        <figcaption class="polaroid__caption">Engaged &middot; 03.01.26</figcaption>
+      </figure>
+
+      <ul class="details__rows">
+        <li class="details__row">
+          <span class="details__icon-wrap">
+            <!-- Calendar icon -->
+            <svg class="line-icon" viewBox="0 0 64 64" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect class="draw" x="10" y="14" width="44" height="40" rx="2" pathLength="1"/>
+              <line class="draw" x1="10" y1="24" x2="54" y2="24" pathLength="1"/>
+              <line class="draw" x1="20" y1="8"  x2="20" y2="20" pathLength="1"/>
+              <line class="draw" x1="44" y1="8"  x2="44" y2="20" pathLength="1"/>
+              <circle class="draw" cx="22" cy="36" r="2" pathLength="1"/>
+              <circle class="draw" cx="32" cy="36" r="2" pathLength="1"/>
+              <circle class="draw" cx="42" cy="36" r="2" pathLength="1"/>
+              <circle class="draw" cx="22" cy="46" r="2" pathLength="1"/>
+              <circle class="draw" cx="32" cy="46" r="2" pathLength="1"/>
+            </svg>
+          </span>
+          <p class="details__label">Thursday, May 21 <span class="details__sep" aria-hidden="true">&middot;</span> 2027</p>
+        </li>
+
+        <li class="details__row">
+          <span class="details__icon-wrap">
+            <!-- Wedding arch icon -->
+            <svg class="line-icon" viewBox="0 0 64 64" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path class="draw" d="M14 56 L14 28 Q14 14 32 14 Q50 14 50 28 L50 56" pathLength="1"/>
+              <line class="draw" x1="6"  y1="56" x2="58" y2="56" pathLength="1"/>
+              <path class="draw" d="M22 30 Q26 24 32 26 Q38 24 42 30" pathLength="1"/>
+              <path class="draw" d="M20 36 Q24 32 30 33"   pathLength="1"/>
+              <path class="draw" d="M44 36 Q40 32 34 33"   pathLength="1"/>
+              <circle class="draw" cx="32" cy="20" r="2.4" pathLength="1"/>
+            </svg>
+          </span>
+          <p class="details__label">Stonehouse Villa <span class="details__sep" aria-hidden="true">&middot;</span> Driftwood, Texas</p>
+        </li>
+
+        <li class="details__row">
+          <span class="details__icon-wrap">
+            <!-- Suit / formal icon -->
+            <svg class="line-icon" viewBox="0 0 64 64" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path class="draw" d="M22 14 L22 22 L32 30 L42 22 L42 14"   pathLength="1"/>
+              <path class="draw" d="M22 22 L14 30 L14 56 L50 56 L50 30 L42 22" pathLength="1"/>
+              <path class="draw" d="M32 30 L32 56" pathLength="1"/>
+              <path class="draw" d="M28 38 L32 34 L36 38" pathLength="1"/>
+              <circle class="draw" cx="32" cy="44" r="1.4" pathLength="1"/>
+              <circle class="draw" cx="32" cy="50" r="1.4" pathLength="1"/>
+            </svg>
+          </span>
+          <p class="details__label">Dress Code: Black Tie Optional</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- =================================================================
+       SECTION 5 — THE DAY TIMELINE  (stacking cards on scroll)
+       Each card is a full-bleed photo with a centered green card that
+       holds the time + icon + event name. As the user scrolls, each
+       subsequent card slides up from below and pins, covering the prior.
+       ================================================================= -->
+  <section id="day-timeline" class="day-timeline" aria-label="The day timeline">
+    <header class="day-timeline__header">
+      <p class="eyebrow eyebrow--cream">An Evening to Remember</p>
+      <h2>The Day</h2>
+    </header>
+
+    <div class="day-stack" id="day-stack">
+      <article class="day-card" data-event="ceremony">
+        <div class="day-card__bg" style="background-image: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=2000&q=85')" aria-hidden="true"></div>
+        <div class="day-card__veil" aria-hidden="true"></div>
+        <div class="day-card__plaque">
+          <p class="day-card__time">4:00 <span>PM</span></p>
+          <span class="day-card__rule" aria-hidden="true"></span>
+          <span class="day-card__icon-wrap">
+            <!-- Couple at altar -->
+            <svg class="line-icon" viewBox="0 0 80 80" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path class="draw" d="M14 70 L14 36 Q14 22 28 22 L52 22 Q66 22 66 36 L66 70" pathLength="1"/>
+              <line class="draw" x1="6" y1="70" x2="74" y2="70" pathLength="1"/>
+              <circle class="draw" cx="34" cy="44" r="3.4" pathLength="1"/>
+              <circle class="draw" cx="46" cy="44" r="3.4" pathLength="1"/>
+              <path class="draw" d="M34 48 L32 64 L36 64" pathLength="1"/>
+              <path class="draw" d="M46 48 Q42 56 44 64 L48 64" pathLength="1"/>
+              <path class="draw" d="M34 64 L46 64" pathLength="1"/>
+              <path class="draw" d="M40 30 L40 26" pathLength="1"/>
+              <circle class="draw" cx="40" cy="24" r="1.6" pathLength="1"/>
+            </svg>
+          </span>
+          <h3 class="day-card__name">Wedding Ceremony</h3>
+          <p class="day-card__sub">A moment thirty years in the making</p>
+        </div>
+      </article>
+
+      <article class="day-card" data-event="cocktail">
+        <div class="day-card__bg" style="background-image: url('https://images.unsplash.com/photo-1535007813616-79dc02ba4021?auto=format&fit=crop&w=2000&q=85')" aria-hidden="true"></div>
+        <div class="day-card__veil" aria-hidden="true"></div>
+        <div class="day-card__plaque">
+          <p class="day-card__time">5:00 <span>PM</span></p>
+          <span class="day-card__rule" aria-hidden="true"></span>
+          <span class="day-card__icon-wrap">
+            <!-- Clinking glasses -->
+            <svg class="line-icon" viewBox="0 0 80 80" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path class="draw" d="M22 14 L18 32 Q18 42 28 44 L28 64" pathLength="1"/>
+              <path class="draw" d="M58 14 L62 32 Q62 42 52 44 L52 64" pathLength="1"/>
+              <line class="draw" x1="22" y1="14" x2="38" y2="14" pathLength="1"/>
+              <line class="draw" x1="42" y1="14" x2="58" y2="14" pathLength="1"/>
+              <line class="draw" x1="22" y1="64" x2="34" y2="64" pathLength="1"/>
+              <line class="draw" x1="46" y1="64" x2="58" y2="64" pathLength="1"/>
+              <path class="draw" d="M40 8 L42 12 M40 8 L38 12 M36 6 L34 10 M44 6 L46 10" pathLength="1"/>
+            </svg>
+          </span>
+          <h3 class="day-card__name">Cocktail Hour</h3>
+          <p class="day-card__sub">Champagne, light bites, and a hundred hellos</p>
+        </div>
+      </article>
+
+      <article class="day-card" data-event="dinner">
+        <div class="day-card__bg" style="background-image: url('https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=2000&q=85')" aria-hidden="true"></div>
+        <div class="day-card__veil" aria-hidden="true"></div>
+        <div class="day-card__plaque">
+          <p class="day-card__time">6:30 <span>PM</span></p>
+          <span class="day-card__rule" aria-hidden="true"></span>
+          <span class="day-card__icon-wrap">
+            <!-- Plate + fork -->
+            <svg class="line-icon" viewBox="0 0 80 80" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle class="draw" cx="40" cy="44" r="22" pathLength="1"/>
+              <circle class="draw" cx="40" cy="44" r="14" pathLength="1"/>
+              <path class="draw" d="M14 18 L14 32 Q14 36 18 36 L18 70" pathLength="1"/>
+              <path class="draw" d="M18 18 L18 28" pathLength="1"/>
+              <path class="draw" d="M14 18 L14 28" pathLength="1"/>
+              <path class="draw" d="M62 18 L62 70" pathLength="1"/>
+              <path class="draw" d="M58 18 Q58 32 62 34 Q66 32 66 18" pathLength="1"/>
+            </svg>
+          </span>
+          <h3 class="day-card__name">Dinner Reception</h3>
+          <p class="day-card__sub">A meal among everyone we love most</p>
+        </div>
+      </article>
+
+      <article class="day-card" data-event="party">
+        <div class="day-card__bg" style="background-image: url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=2000&q=85')" aria-hidden="true"></div>
+        <div class="day-card__veil" aria-hidden="true"></div>
+        <div class="day-card__plaque">
+          <p class="day-card__time">8:30 <span>PM</span></p>
+          <span class="day-card__rule" aria-hidden="true"></span>
+          <span class="day-card__icon-wrap">
+            <!-- Music note + dancing figure -->
+            <svg class="line-icon" viewBox="0 0 80 80" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path class="draw" d="M40 16 L40 50" pathLength="1"/>
+              <path class="draw" d="M40 16 L60 12 L60 24" pathLength="1"/>
+              <ellipse class="draw" cx="34" cy="52" rx="6" ry="4" pathLength="1"/>
+              <ellipse class="draw" cx="60" cy="26" rx="6" ry="4" pathLength="1"/>
+              <circle class="draw" cx="20" cy="22" r="3" pathLength="1"/>
+              <path class="draw" d="M20 25 L20 44" pathLength="1"/>
+              <path class="draw" d="M20 32 L12 38" pathLength="1"/>
+              <path class="draw" d="M20 32 L26 28" pathLength="1"/>
+              <path class="draw" d="M20 44 L14 60" pathLength="1"/>
+              <path class="draw" d="M20 44 L26 60" pathLength="1"/>
+            </svg>
+          </span>
+          <h3 class="day-card__name">After Party &middot; Dancing</h3>
+          <p class="day-card__sub">Until the band stops or the sun comes up</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- =================================================================
+       SECTION 6 — SAVE THE DATE / COUNTDOWN
        ================================================================= -->
   <section id="save-the-date" class="save-the-date">
     <div class="save-the-date__inner">

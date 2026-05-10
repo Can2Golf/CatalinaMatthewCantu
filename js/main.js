@@ -1,24 +1,24 @@
-// Top-level orchestrator. Curtain split -> intro reveal -> CTA shatter ->
-// globe entrance + marker arrival -> click marker -> camera rush + scene.
+// Top-level orchestrator. Video hero -> globe story -> wedding details ->
+// day timeline (stacking cards) -> countdown -> people -> RSVP -> footer.
 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { STORY_POINTS, PEOPLE } from './data/story.js';
 import { Globe } from './utils/globe.js';
-import { IntroParticles, playIntroReveal, playIntroExit, openCurtains } from './components/intro.js';
 import { SceneManager } from './components/scenes.js';
 import { startCountdown } from './components/countdown.js';
 import { bindRsvp } from './components/rsvp.js';
+import { initHeroVideo } from './components/hero-video.js';
+import { initWeddingDetails } from './components/wedding-details.js';
+import { initDayTimeline } from './components/day-timeline.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const $loader  = document.getElementById('loader');
-const $intro   = document.getElementById('intro');
-const $cta     = document.getElementById('intro-cta');
-const $globe   = document.getElementById('globe');
+const $loader      = document.getElementById('loader');
+const $globe       = document.getElementById('globe');
 const $globeCanvas = document.getElementById('globe-canvas');
-const $tooltip = document.getElementById('globe-tooltip');
+const $tooltip     = document.getElementById('globe-tooltip');
 const $tooltipCity  = $tooltip.querySelector('.globe-tooltip__city');
 const $tooltipLabel = $tooltip.querySelector('.globe-tooltip__label');
 const $chapterDots  = document.getElementById('chapter-dots');
@@ -34,8 +34,6 @@ const $mobileList   = document.getElementById('mobile-timeline-list');
 
 const isMobile = matchMedia('(max-width: 820px)').matches;
 
-let introParticles = null;
-
 window.addEventListener('load', () => {
   // Hide loader after first frame
   requestAnimationFrame(() => {
@@ -43,33 +41,23 @@ window.addEventListener('load', () => {
     setTimeout(() => $loader.remove(), 1400);
   });
 
-  // 1. Particles begin (idle drift below curtains)
-  introParticles = new IntroParticles(document.getElementById('intro-particles'));
+  // 1. Hero
+  initHeroVideo();
 
-  // 2. Curtain split — when they begin moving, fire the burst
-  setTimeout(() => introParticles.burst(), 350);
+  // 2. Story section (globe or mobile fallback) — mounts immediately so it's
+  //    ready by the time the user scrolls past the hero
+  mountStorySection();
 
-  openCurtains().then(() => {
-    // 3. Stagger reveal once curtains are gone
-    playIntroReveal($intro);
-  });
+  // 3. Wedding details + day timeline (both ScrollTrigger-driven)
+  initWeddingDetails();
+  initDayTimeline();
 
-  // 4. CTA -> shatter exit -> mount story section
-  $cta.addEventListener('click', () => {
-    introParticles.implode();
-    playIntroExit($intro).then(() => {
-      $intro.style.display = 'none';
-      mountStorySection();
-      ($globe.hidden ? $mobileTimeline : $globe).scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  });
-
-  // 5. Lower sections — independent of intro flow
+  // 4. Countdown + people grid + RSVP
   startCountdown(document.getElementById('countdown'));
   renderPeopleGrid();
   bindRsvp(document.getElementById('rsvp-form'));
 
-  // 6. ScrollTrigger reveals
+  // 5. Generic ScrollTrigger reveals on the lower sections
   setupScrollReveals();
 });
 
@@ -122,11 +110,20 @@ function mountGlobe() {
     }
   });
 
-  // Globe enters with a shockwave; markers arrive as shooting stars.
-  // Fade canvas in from black for added cinema.
-  gsap.fromTo($globe, { opacity: 0 }, { opacity: 1, duration: 0.8, ease: 'power2.out' });
-  globeInstance.playEntrance();
-  setTimeout(() => globeInstance.revealMarkers(), 1000);
+  // Globe enters with shockwave + markers arrive when scrolled into view
+  let revealed = false;
+  ScrollTrigger.create({
+    trigger: $globe,
+    start: 'top 60%',
+    once: true,
+    onEnter: () => {
+      if (revealed) return;
+      revealed = true;
+      gsap.fromTo($globe, { opacity: 0 }, { opacity: 1, duration: 0.8, ease: 'power2.out' });
+      globeInstance.playEntrance();
+      setTimeout(() => globeInstance.revealMarkers(), 900);
+    }
+  });
 
   sceneManager = new SceneManager({
     root: $sceneRoot,
@@ -159,8 +156,8 @@ function mountGlobe() {
     }
   });
 
-  $skipDetails.addEventListener('click', () => {
-    document.getElementById('save-the-date').scrollIntoView({ behavior: 'smooth' });
+  $skipDetails?.addEventListener('click', () => {
+    document.getElementById('wedding-details').scrollIntoView({ behavior: 'smooth' });
   });
 }
 
@@ -174,9 +171,7 @@ function setActiveDot(i) {
 function openScene(point, index) {
   setActiveDot(index);
   globeInstance?.flashMarker(point);
-  // Fast spin + camera rush to z=1.4 + marker explosion
   globeInstance?.focusOn(point, { duration: 0.6, zoomTo: 1.4, explode: true });
-  // Open scene right as the camera reaches the surface
   setTimeout(() => sceneManager.open(point, index), 850);
 }
 
@@ -235,7 +230,6 @@ function renderPeopleGrid() {
 
 /* ============================ SCROLL REVEALS ============================ */
 
-/** Split a heading into per-character spans so we can stagger them. */
 function splitChars(el) {
   if (!el || el.dataset.split === '1') return;
   const text = el.textContent;
@@ -243,7 +237,7 @@ function splitChars(el) {
   for (const ch of text) {
     const span = document.createElement('span');
     span.className = 'char';
-    span.textContent = ch === ' ' ? ' ' : ch;
+    span.textContent = ch === ' ' ? ' ' : ch;
     el.appendChild(span);
   }
   el.dataset.split = '1';
@@ -255,7 +249,7 @@ function setupScrollReveals() {
   if (reduce) return;
 
   // Section headings: split + stagger up
-  document.querySelectorAll('.section-header h2, .save-the-date__title')
+  document.querySelectorAll('.section-header h2, .save-the-date__title, .details__header h2, .day-timeline__header h2')
     .forEach(h => {
       splitChars(h);
       gsap.to(h.querySelectorAll('.char'), {
@@ -268,7 +262,6 @@ function setupScrollReveals() {
       });
     });
 
-  // Wedding party — fan-in from a stacked center position
   ScrollTrigger.create({
     trigger: '.people__grid',
     start: 'top 80%',
@@ -282,7 +275,6 @@ function setupScrollReveals() {
     }
   });
 
-  // RSVP fields — fade up on entry
   ScrollTrigger.create({
     trigger: '#rsvp-form',
     start: 'top 80%',
@@ -295,7 +287,6 @@ function setupScrollReveals() {
     }
   });
 
-  // Save-the-date venue + city + flip clock fade-in
   ScrollTrigger.create({
     trigger: '.save-the-date__inner',
     start: 'top 80%',
@@ -312,7 +303,6 @@ function setupScrollReveals() {
     }
   });
 
-  // Footer title fade-up
   ScrollTrigger.create({
     trigger: '.site-footer',
     start: 'top 90%',
