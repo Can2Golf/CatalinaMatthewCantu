@@ -1,0 +1,20 @@
+{
+  "name": "catalinamatthewcantu",
+  "version": "1.0.0",
+  "description": "An interactive single-page wedding website. Pure HTML / CSS / vanilla JavaScript — no build step, deploys anywhere static.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://local_proxy@127.0.0.1:46892/git/Can2Golf/CatalinaMatthewCantu"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gsap": "^3.15.0",
+    "three": "^0.184.0"
+  }
+}
