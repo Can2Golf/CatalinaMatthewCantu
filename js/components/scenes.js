@@ -21,6 +21,9 @@ const SCENE_BACKGROUNDS = {
   `,
   home: `
     radial-gradient(ellipse at center 70%, #c87d3c 0%, #6e371e 22%, #2c1418 55%, #0a0510 100%)
+  `,
+  nyc: `
+    radial-gradient(ellipse at 50% 95%, #4a3a6e 0%, #1f1a44 18%, #0a0a26 45%, #04051a 78%, #02020c 100%)
   `
 };
 
@@ -277,12 +280,61 @@ function homeHearts() {
   };
 }
 
+function nycSnow() {
+  return {
+    count: 110,
+    init() {
+      this.particles = Array.from({ length: this.config.count }, () => this._spawn(true));
+    },
+    _spawn(initial) {
+      const big = Math.random() < 0.18;
+      return {
+        x: Math.random() * this.w,
+        y: initial ? Math.random() * this.h : -10 - Math.random() * 60,
+        size: big ? 2.6 + Math.random() * 2.2 : 1 + Math.random() * 1.6,
+        vy: 0.35 + Math.random() * 0.95,
+        vxBase: (Math.random() - 0.5) * 0.45,
+        swayPhase: Math.random() * Math.PI * 2,
+        swaySpeed: 0.4 + Math.random() * 0.9,
+        swayAmp:   0.25 + Math.random() * 0.55,
+        opacity: 0.55 + Math.random() * 0.4,
+        twinkle: Math.random() * Math.PI * 2,
+        big
+      };
+    },
+    step(p, dt, t) {
+      p.y += p.vy;
+      p.x += p.vxBase + Math.sin(t * p.swaySpeed + p.swayPhase) * p.swayAmp;
+      // Soft twinkle on big flakes
+      const tw = p.big ? 0.75 + 0.25 * Math.sin(t * 2.4 + p.twinkle) : 1;
+      p.alpha = p.opacity * tw;
+      if (p.y > this.h + 20 || p.x < -30 || p.x > this.w + 30) {
+        Object.assign(p, this._spawn(false));
+      }
+    },
+    render(p) {
+      this.ctx.globalAlpha = p.alpha;
+      this.ctx.fillStyle = '#f5f8ff';
+      this.ctx.beginPath();
+      this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      this.ctx.fill();
+      if (p.big) {
+        this.ctx.globalAlpha = p.alpha * 0.4;
+        this.ctx.beginPath();
+        this.ctx.arc(p.x, p.y, p.size * 3.2, 0, Math.PI * 2);
+        this.ctx.fill();
+      }
+    }
+  };
+}
+
 const SCENE_PARTICLES = {
   austin:     austinSparkles,
   neworleans: neworleansPetals,
   paris:      parisBokeh,
   santorini:  santoriniConfetti,
-  home:       homeHearts
+  home:       homeHearts,
+  nyc:        nycSnow
 };
 
 /* ---------- Public manager ---------- */
