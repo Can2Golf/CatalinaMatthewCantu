@@ -112,12 +112,13 @@ input, select, textarea { font: inherit; color: inherit; }
   border-radius: 999px;
 }
 .btn--gold-outline::before {
+  /* Flood-on-hover: gold curtain swiping in from left */
   content: '';
   position: absolute; inset: 0;
-  background: linear-gradient(180deg, var(--gold-light), var(--gold) 60%, var(--rose-gold));
-  transform: translateY(101%);
-  transition: transform .55s var(--ease-fluid);
-  z-index: -1;
+  background: linear-gradient(90deg, var(--gold-light), var(--gold) 60%, var(--rose-gold));
+  transform: translateX(-101%);
+  transition: transform .6s var(--ease-fluid);
+  z-index: 0;
 }
 .btn--gold-outline:hover, .btn--gold-outline:focus-visible {
   color: var(--bg);
@@ -125,8 +126,17 @@ input, select, textarea { font: inherit; color: inherit; }
   outline: none;
   box-shadow: 0 18px 38px -14px var(--gold-glow);
 }
-.btn--gold-outline:hover::before, .btn--gold-outline:focus-visible::before { transform: translateY(0); }
-.btn--gold-outline > span { position: relative; z-index: 1; }
+.btn--gold-outline:hover::before, .btn--gold-outline:focus-visible::before { transform: translateX(0); }
+.btn--gold-outline > span { position: relative; z-index: 2; }
+
+/* Pulsing gold halo around the intro CTA */
+.btn--pulse {
+  animation: ctaPulse 2.4s var(--ease-fluid) infinite;
+}
+@keyframes ctaPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 168, 83, .55), 0 14px 30px -12px rgba(212, 168, 83, .35); }
+  50%      { box-shadow: 0 0 0 14px rgba(212, 168, 83, 0), 0 14px 30px -12px rgba(212, 168, 83, .35); }
+}
 
 .btn--gold-fill {
   background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 55%, #a07a32 100%);
@@ -232,7 +242,7 @@ input, select, textarea { font: inherit; color: inherit; }
   gap: .15em;
   text-transform: uppercase;
 }
-.intro__name { display: block; opacity: 0; transform: translateY(40px); }
+.intro__name { display: inline-flex; }
 .intro__amp {
   font-family: var(--font-script);
   font-weight: 600;
@@ -919,6 +929,450 @@ input, select, textarea { font: inherit; color: inherit; }
 }
 
 /* ==========================================================================
+   CURTAINS — opening sequence
+   ========================================================================== */
+.curtain {
+  position: fixed;
+  top: 0; bottom: 0;
+  width: 50.5vw;
+  z-index: 90;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, #04060c 0%, #02030a 60%, #000003 100%);
+}
+.curtain--left  { left: 0; }
+.curtain--right { right: 0; }
+
+/* Subtle gold shimmer on the curtain inner edge */
+.curtain__edge {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, transparent 0%, rgba(212,168,83,.25) 30%, rgba(240,200,120,.85) 50%, rgba(212,168,83,.25) 70%, transparent 100%);
+  filter: blur(1px);
+  background-size: 100% 220%;
+  animation: curtainShimmer 2.6s ease-in-out infinite;
+}
+.curtain--left  .curtain__edge { right: 0; }
+.curtain--right .curtain__edge { left:  0; }
+
+@keyframes curtainShimmer {
+  0%   { background-position: 0 -110%; opacity: .4; }
+  50%  { background-position: 0   60%; opacity: 1;  }
+  100% { background-position: 0  220%; opacity: .4; }
+}
+
+/* ==========================================================================
+   AURORA + GOLD SWEEP + FLASH layers
+   ========================================================================== */
+.intro__aurora {
+  position: absolute; inset: -10%;
+  z-index: 0;
+  opacity: .85;
+  background:
+    radial-gradient(60% 60% at 30% 30%, #2c4a8c33 0%, transparent 70%),
+    radial-gradient(50% 50% at 70% 60%, #5b3a8a33 0%, transparent 65%),
+    radial-gradient(55% 55% at 50% 80%, #1a3068aa 0%, transparent 70%),
+    radial-gradient(80% 80% at 50% 50%, #060f24 0%, #02060f 100%);
+  filter: blur(12px) saturate(1.1);
+  animation: auroraShift 18s ease-in-out infinite;
+}
+@keyframes auroraShift {
+  0%, 100% { transform: translate(0, 0) scale(1.05); }
+  33%      { transform: translate(-3%, 2%) scale(1.12); }
+  66%      { transform: translate(3%, -2%) scale(1.08); }
+}
+
+.intro__sweep {
+  position: absolute; top: 0; bottom: 0;
+  width: 60vw;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(115deg,
+    transparent 0%,
+    transparent 38%,
+    rgba(240, 200, 120, .12) 46%,
+    rgba(240, 200, 120, .55) 50%,
+    rgba(240, 200, 120, .12) 54%,
+    transparent 62%,
+    transparent 100%);
+  filter: blur(2px);
+  transform: translateX(-120vw) skewX(-12deg);
+  mix-blend-mode: screen;
+  opacity: 0;
+}
+.intro.is-revealed .intro__sweep {
+  animation: goldSweep 2s var(--ease-fluid) .4s forwards;
+}
+@keyframes goldSweep {
+  0%   { transform: translateX(-120vw) skewX(-12deg); opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateX(160vw)  skewX(-12deg); opacity: 0; }
+}
+
+.intro__flash {
+  position: absolute; inset: 0;
+  z-index: 95;
+  background: #ffffff;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   NAME LETTERS (blur to sharp + handwriting)
+   ========================================================================== */
+.intro__name {
+  display: inline-flex;
+  gap: .04em;
+}
+.intro__name .char {
+  display: inline-block;
+  filter: blur(14px);
+  opacity: 0;
+  transform: translateY(8px) scale(1.04);
+  transition: filter .55s var(--ease-fluid), opacity .55s var(--ease-fluid), transform .55s var(--ease-fluid);
+}
+.intro__name .char.is-sharp {
+  filter: blur(0);
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.intro__name--script {
+  font-family: var(--font-script);
+  font-size: clamp(4.2rem, 11vw, 9rem);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--gold-light);
+  line-height: .9;
+  margin-top: -.3em;
+  text-shadow: 0 0 30px rgba(240, 200, 120, .4);
+  gap: 0;
+}
+.intro__name--script .char {
+  filter: none;
+  opacity: 0;
+  transform: translateY(6px) rotate(-3deg);
+  transition: opacity .25s var(--ease-fluid), transform .35s var(--ease-fluid);
+}
+.intro__name--script .char.is-written {
+  opacity: 1;
+  transform: translateY(0) rotate(0);
+}
+
+/* Letters are scattered on shatter exit — JS sets data-x / data-y per letter. */
+.intro__name .char.is-shattering {
+  transition: transform .9s cubic-bezier(.55, .04, .8, .15), opacity .9s ease-in;
+  opacity: 0;
+}
+
+/* ==========================================================================
+   SECTION 2 — GLOBE  (entrance + canvas crossfade)
+   ========================================================================== */
+.globe-section {
+  /* Hidden initially via [hidden]; once revealed, fade in from black */
+  opacity: 1;
+}
+.globe-section .globe-canvas { transform-origin: 50% 50%; }
+
+/* ==========================================================================
+   SCENE — radial clip-path wipe + animated background depth
+   ========================================================================== */
+.scene__background {
+  /* Override of base — adds animated gradient layering */
+  background-size: 200% 200%;
+  animation: sceneDrift 18s ease-in-out infinite;
+}
+@keyframes sceneDrift {
+  0%, 100% { background-position: 0 0;   transform: scale(1.04); }
+  50%      { background-position: 100% 100%; transform: scale(1.08); }
+}
+
+.scene {
+  /* Override base — radial clip-path opens from center */
+  clip-path: circle(0% at 50% 50%);
+  transition: clip-path .8s var(--ease-fluid), opacity .25s linear;
+}
+.scene.is-open {
+  clip-path: circle(150% at 50% 50%);
+}
+
+/* Story card — gold border traveling shimmer overlay */
+.scene__card { position: relative; }
+.scene__card::before {
+  content: '';
+  position: absolute; inset: -1px;
+  border-radius: 5px;
+  padding: 1px;
+  background:
+    conic-gradient(from var(--shimmer-angle, 0deg),
+      transparent 0deg,
+      transparent 320deg,
+      rgba(240, 200, 120, .85) 340deg,
+      rgba(255, 240, 200, 1) 350deg,
+      rgba(240, 200, 120, .85) 360deg,
+      transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  animation: borderShimmer 5s linear infinite;
+  opacity: .9;
+}
+@property --shimmer-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes borderShimmer {
+  to { --shimmer-angle: 360deg; }
+}
+
+/* Stagger helpers used by JS */
+.scene__city .char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+/* ==========================================================================
+   COUNTDOWN — flip clock
+   ========================================================================== */
+.flip-clock {
+  margin-top: 2.4rem;
+  display: flex; flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(.6rem, 2vw, 1.4rem);
+  font-variant-numeric: tabular-nums;
+}
+.flip-cell {
+  display: flex; flex-direction: column; align-items: center;
+  perspective: 700px;
+}
+.flip-card {
+  position: relative;
+  width: clamp(4rem, 9vw, 5.6rem);
+  height: clamp(3.2rem, 7.5vw, 4.6rem);
+  transform-style: preserve-3d;
+  transition: transform .65s cubic-bezier(.6, .04, .2, 1);
+  margin-bottom: .8rem;
+}
+.flip-card.is-flipping { transform: rotateX(-180deg); }
+.flip-card .flip-front,
+.flip-card .flip-back {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+  color: var(--gold-light);
+  letter-spacing: .04em;
+  background: linear-gradient(180deg, rgba(13, 31, 60, .55) 0%, rgba(10, 20, 40, .8) 100%);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.04),
+    0 12px 28px -12px rgba(0,0,0,.6);
+}
+.flip-card .flip-back {
+  transform: rotateX(180deg);
+}
+/* Center hairline to suggest the split flap */
+.flip-card .flip-front::after,
+.flip-card .flip-back::after {
+  content: '';
+  position: absolute; left: 0; right: 0;
+  top: 50%; height: 1px;
+  background: rgba(0,0,0,.45);
+  transform: translateY(-.5px);
+}
+.flip-cell.glow .flip-card .flip-front,
+.flip-cell.glow .flip-card .flip-back {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 0 28px var(--gold-glow),
+    0 12px 28px -12px rgba(0,0,0,.6);
+}
+.flip-label {
+  font-family: var(--font-body);
+  font-size: .58rem;
+  letter-spacing: .35em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+
+/* ==========================================================================
+   FLOATING LABEL FIELDS
+   ========================================================================== */
+.field--float {
+  position: relative;
+  display: block;
+}
+.field--float input,
+.field--float textarea,
+.field--float select {
+  width: 100%;
+  padding: 1.4rem 0 .55rem;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  outline: none;
+  transition: border-color .3s var(--ease-out);
+}
+.field--float select option { background: var(--surface); color: var(--text); }
+.field--float label {
+  position: absolute;
+  left: 0;
+  top: 1.4rem;
+  pointer-events: none;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  letter-spacing: .04em;
+  color: var(--text-mute);
+  text-transform: none;
+  font-weight: 400;
+  transform-origin: left center;
+  transition: transform .35s var(--ease-fluid), color .35s var(--ease-out);
+}
+.field--float input:focus ~ label,
+.field--float textarea:focus ~ label,
+.field--float select:focus ~ label,
+.field--float input:not(:placeholder-shown) ~ label,
+.field--float textarea:not(:placeholder-shown) ~ label,
+.field--float select:valid ~ label {
+  transform: translateY(-1.3rem) scale(.7);
+  color: var(--gold);
+}
+.field__underline {
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%; height: 1px;
+  background: linear-gradient(to right, var(--gold-light), var(--gold), var(--gold-dark, #7a6135));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .55s var(--ease-fluid);
+  pointer-events: none;
+}
+.field--float input:focus ~ .field__underline,
+.field--float textarea:focus ~ .field__underline,
+.field--float select:focus ~ .field__underline {
+  transform: scaleX(1);
+}
+
+/* ==========================================================================
+   RSVP submit — circle morph + check
+   ========================================================================== */
+.btn--submit-anim {
+  position: relative;
+  height: 56px;
+  transition: width .55s var(--ease-fluid), padding .55s var(--ease-fluid), background .55s var(--ease-fluid);
+}
+.btn--submit-anim .btn__label,
+.btn--submit-anim .btn__spinner,
+.btn--submit-anim .btn__check,
+.btn--submit-anim .btn__success-msg {
+  transition: opacity .35s var(--ease-out);
+}
+.btn--submit-anim .btn__spinner,
+.btn--submit-anim .btn__check,
+.btn--submit-anim .btn__success-msg {
+  position: absolute;
+  inset: 0;
+  display: grid; place-items: center;
+  opacity: 0; pointer-events: none;
+}
+.btn--submit-anim .btn__success-msg {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: .92rem;
+  letter-spacing: .12em;
+  text-transform: none;
+  color: var(--bg);
+  padding: 0 1rem;
+}
+.btn--submit-anim .btn__spinner {
+  width: 26px; height: 26px;
+  margin: auto;
+  border: 2px solid rgba(0,0,0,.2);
+  border-top-color: rgba(0,0,0,.7);
+  border-radius: 50%;
+}
+.btn--submit-anim .btn__check svg { width: 28px; height: 28px; color: var(--bg); }
+.btn--submit-anim .btn__check-path {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  transition: stroke-dashoffset .5s var(--ease-fluid);
+}
+.btn--submit-anim.is-loading {
+  width: 56px;
+  padding: 0;
+}
+.btn--submit-anim.is-loading .btn__label { opacity: 0; }
+.btn--submit-anim.is-loading .btn__spinner {
+  opacity: 1;
+  animation: spin .9s linear infinite;
+}
+.btn--submit-anim.is-success {
+  width: 100%;
+  padding: 0 1rem;
+  background: linear-gradient(180deg, #6da366 0%, #4f7e4a 100%);
+  border-color: #4f7e4a;
+}
+.btn--submit-anim.is-success .btn__label,
+.btn--submit-anim.is-success .btn__spinner { opacity: 0; }
+.btn--submit-anim.is-success .btn__check { opacity: 1; }
+.btn--submit-anim.is-success .btn__check-path { stroke-dashoffset: 0; }
+.btn--submit-anim.is-success .btn__success-msg {
+  opacity: 1;
+  transition-delay: .25s;
+}
+.btn--submit-anim.is-success .btn__check { transition-delay: .15s; }
+.btn--submit-anim.is-success .btn__check svg { animation: checkPop .55s var(--ease-fluid) .15s both; }
+@keyframes checkPop {
+  0%   { transform: scale(.6); }
+  60%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* ==========================================================================
+   FOOTER SHIMMER TEXT
+   ========================================================================== */
+.shimmer-text span:not(.site-footer__amp) {
+  background: linear-gradient(90deg,
+    var(--text) 0%,
+    var(--text) 35%,
+    var(--gold-light) 50%,
+    var(--text) 65%,
+    var(--text) 100%);
+  background-size: 220% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: shimmerSlide 5.5s linear infinite;
+}
+@keyframes shimmerSlide {
+  to { background-position: -220% 0; }
+}
+
+/* ==========================================================================
+   SCROLL-REVEAL CHARACTER SPLIT helper
+   ========================================================================== */
+.split-chars .char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* ==========================================================================
    REDUCED MOTION
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
@@ -931,6 +1385,17 @@ input, select, textarea { font: inherit; color: inherit; }
   .intro__name, .intro__amp, .intro__subtitle, .intro__meta, #intro-cta {
     opacity: 1 !important; transform: none !important;
   }
+  .intro__name .char, .intro__name--script .char {
+    filter: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
   .intro__divider-line { transform: scaleX(1) !important; }
   .intro__divider-diamond { transform: rotate(45deg) scale(1) !important; }
+  .curtain { display: none !important; }
+  .intro__sweep, .intro__aurora { display: none !important; }
+  .scene { clip-path: none !important; }
+  .scene__background { animation: none !important; }
+  .scene__card::before { display: none !important; }
+  .shimmer-text span { background: none !important; -webkit-text-fill-color: var(--text) !important; color: var(--text) !important; }
 }

@@ -18,7 +18,8 @@
   {
     "imports": {
       "three": "https://esm.sh/three@0.184.0",
-      "gsap": "https://esm.sh/gsap@3.15.0"
+      "gsap": "https://esm.sh/gsap@3.15.0",
+      "gsap/ScrollTrigger": "https://esm.sh/gsap@3.15.0/ScrollTrigger"
     }
   }
   </script>
@@ -37,14 +38,18 @@
        SECTION 1 — CINEMATIC INTRO
        ================================================================= -->
   <section id="intro" class="intro" aria-label="Cinematic opening">
+    <!-- Aurora-borealis hue-shifting layer behind everything -->
+    <div class="intro__aurora" aria-hidden="true"></div>
     <canvas id="intro-particles" class="intro__particles" aria-hidden="true"></canvas>
+    <!-- One-shot diagonal gold light beam -->
+    <div class="intro__sweep" aria-hidden="true"></div>
 
     <div class="intro__content">
       <h1 class="intro__names">
-        <span class="intro__name" data-name>Matthew</span>
+        <span class="intro__name" data-letters="MATTHEW" aria-label="Matthew"></span>
         <span class="intro__amp" aria-hidden="true">&amp;</span>
         <span class="sr-only">and</span>
-        <span class="intro__name" data-name>Catalina</span>
+        <span class="intro__name intro__name--script" data-handwrite="Catalina" aria-label="Catalina"></span>
       </h1>
 
       <div class="intro__divider" aria-hidden="true">
@@ -62,12 +67,19 @@
       </p>
       <p class="intro__meta intro__meta--small">Stonehouse Villa &middot; Driftwood, Texas</p>
 
-      <button class="btn btn--gold-outline" id="intro-cta" type="button">
-        <span>Begin Our Story</span>
+      <button class="btn btn--gold-outline btn--pulse" id="intro-cta" type="button">
+        <span class="btn__label">Begin Our Story</span>
       </button>
     </div>
 
     <div class="intro__vignette" aria-hidden="true"></div>
+
+    <!-- Theater curtains — cover everything at start, animate apart -->
+    <div class="curtain curtain--left"  aria-hidden="true"><span class="curtain__edge"></span></div>
+    <div class="curtain curtain--right" aria-hidden="true"><span class="curtain__edge"></span></div>
+
+    <!-- White flash for shatter exit -->
+    <div class="intro__flash" aria-hidden="true"></div>
   </section>
 
   <!-- =================================================================
@@ -152,11 +164,35 @@
       <p class="save-the-date__city">Driftwood, Texas</p>
       <span class="rule" aria-hidden="true"></span>
 
-      <div id="countdown" class="countdown" aria-live="polite">
-        <div class="countdown__cell"><span class="countdown__num" data-unit="days">000</span><span class="countdown__label">Days</span></div>
-        <div class="countdown__cell"><span class="countdown__num" data-unit="hours">00</span><span class="countdown__label">Hours</span></div>
-        <div class="countdown__cell"><span class="countdown__num" data-unit="minutes">00</span><span class="countdown__label">Minutes</span></div>
-        <div class="countdown__cell"><span class="countdown__num" data-unit="seconds">00</span><span class="countdown__label">Seconds</span></div>
+      <div id="countdown" class="flip-clock" aria-live="polite">
+        <div class="flip-cell" data-unit="days">
+          <div class="flip-card">
+            <span class="flip-front">000</span>
+            <span class="flip-back">000</span>
+          </div>
+          <span class="flip-label">Days</span>
+        </div>
+        <div class="flip-cell" data-unit="hours">
+          <div class="flip-card">
+            <span class="flip-front">00</span>
+            <span class="flip-back">00</span>
+          </div>
+          <span class="flip-label">Hours</span>
+        </div>
+        <div class="flip-cell" data-unit="minutes">
+          <div class="flip-card">
+            <span class="flip-front">00</span>
+            <span class="flip-back">00</span>
+          </div>
+          <span class="flip-label">Minutes</span>
+        </div>
+        <div class="flip-cell" data-unit="seconds">
+          <div class="flip-card">
+            <span class="flip-front">00</span>
+            <span class="flip-back">00</span>
+          </div>
+          <span class="flip-label">Seconds</span>
+        </div>
       </div>
     </div>
   </section>
@@ -183,14 +219,16 @@
     </header>
 
     <form id="rsvp-form" class="rsvp__form" action="mailto:catalinamatthewcantu@gmail.com" method="post" enctype="text/plain" novalidate>
-      <div class="field">
+      <div class="field field--float">
+        <input id="rsvp-name" name="Name" type="text" autocomplete="name" required placeholder=" " />
         <label for="rsvp-name">Full Name</label>
-        <input id="rsvp-name" name="Name" type="text" autocomplete="name" required />
+        <span class="field__underline" aria-hidden="true"></span>
       </div>
 
-      <div class="field">
+      <div class="field field--float">
+        <input id="rsvp-email" name="Email" type="email" autocomplete="email" required placeholder=" " />
         <label for="rsvp-email">Email</label>
-        <input id="rsvp-email" name="Email" type="email" autocomplete="email" required />
+        <span class="field__underline" aria-hidden="true"></span>
       </div>
 
       <fieldset class="field field--radio">
@@ -199,32 +237,41 @@
         <label class="radio"><input type="radio" name="Attending" value="Regretfully Declining" /><span>Regretfully declining</span></label>
       </fieldset>
 
-      <div class="field">
-        <label for="rsvp-meal">Meal Preference</label>
+      <div class="field field--float">
         <div class="select-wrap">
           <select id="rsvp-meal" name="Meal">
-            <option value="">Select a meal</option>
+            <option value="" disabled selected hidden></option>
             <option>Beef Tenderloin</option>
             <option>Pan-Seared Branzino</option>
             <option>Roasted Vegetable Risotto (Vegetarian)</option>
             <option>Children's Plate</option>
           </select>
         </div>
+        <label for="rsvp-meal">Meal Preference</label>
+        <span class="field__underline" aria-hidden="true"></span>
       </div>
 
-      <div class="field">
+      <div class="field field--float">
+        <input id="rsvp-song" name="Song" type="text" placeholder=" " />
         <label for="rsvp-song">Song Request</label>
-        <input id="rsvp-song" name="Song" type="text" placeholder="A song that&rsquo;ll get you on the dance floor" />
+        <span class="field__underline" aria-hidden="true"></span>
       </div>
 
-      <div class="field">
+      <div class="field field--float">
+        <textarea id="rsvp-note" name="Note" rows="3" placeholder=" "></textarea>
         <label for="rsvp-note">A Note for Matthew &amp; Catalina</label>
-        <textarea id="rsvp-note" name="Note" rows="3" placeholder="Optional"></textarea>
+        <span class="field__underline" aria-hidden="true"></span>
       </div>
 
-      <button class="btn btn--gold-fill" type="submit" id="rsvp-submit">
+      <button class="btn btn--gold-fill btn--submit-anim" type="submit" id="rsvp-submit">
         <span class="btn__label">Send RSVP</span>
         <span class="btn__spinner" aria-hidden="true"></span>
+        <span class="btn__check" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path class="btn__check-path" d="M5 12 L10 17 L19 7" />
+          </svg>
+        </span>
+        <span class="btn__success-msg">We can&rsquo;t wait to celebrate with you!</span>
       </button>
     </form>
   </section>
@@ -233,7 +280,7 @@
        FOOTER
        ================================================================= -->
   <footer class="site-footer">
-    <h2 class="site-footer__title">
+    <h2 class="site-footer__title shimmer-text">
       <span>Matthew</span>
       <span class="site-footer__amp" aria-hidden="true">&amp;</span>
       <span>Catalina</span>

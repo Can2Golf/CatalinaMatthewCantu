@@ -1,4 +1,5 @@
-// RSVP form — animated submit + mailto compose.
+// RSVP form — submit shrinks button to a circle, spinner shows, then
+// expands back with a checkmark and "We can't wait to celebrate with you!"
 
 export function bindRsvp(form) {
   if (!form) return;
@@ -6,8 +7,7 @@ export function bindRsvp(form) {
 
   form.addEventListener('submit', (e) => {
     const action = form.getAttribute('action') || '';
-    if (action.indexOf('mailto:') !== 0) return;   // server-handled forms pass through
-
+    if (action.indexOf('mailto:') !== 0) return;
     e.preventDefault();
     if (!form.reportValidity()) return;
 
@@ -15,6 +15,7 @@ export function bindRsvp(form) {
     submit.disabled = true;
 
     setTimeout(() => {
+      // Compose mailto and open user's email client
       const to = action.replace(/^mailto:/, '');
       const data = new FormData(form);
       const lines = [];
@@ -24,13 +25,7 @@ export function bindRsvp(form) {
       window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
 
       submit.classList.remove('is-loading');
-      submit.disabled = false;
-
-      // Inline confirmation
-      const confirm = document.createElement('p');
-      confirm.style.cssText = 'text-align:center;color:var(--gold-light);font-style:italic;margin-top:1rem;letter-spacing:.04em';
-      confirm.textContent = 'Thank you — your email client should now open with your reply.';
-      form.appendChild(confirm);
-    }, 700);
+      submit.classList.add('is-success');
+    }, 900);
   });
 }

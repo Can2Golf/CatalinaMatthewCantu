@@ -353,70 +353,107 @@ export class SceneManager {
     this._particles = null;
   }
 
+  /** Split city name into per-character spans for stagger reveals. */
+  _splitCity(text) {
+    this.dom.city.textContent = '';
+    [...text].forEach(ch => {
+      const span = document.createElement('span');
+      span.className = 'char';
+      span.textContent = ch === ' ' ? ' ' : ch;
+      this.dom.city.appendChild(span);
+    });
+    return this.dom.city.querySelectorAll('.char');
+  }
+
   open(point, index) {
     this._activeIndex = index;
     this.root.dataset.scene = point.scene;
 
-    // Background gradient
     this.bg.style.background = SCENE_BACKGROUNDS[point.scene] || SCENE_BACKGROUNDS.home;
 
-    // Card content
     this.dom.chapter.textContent = point.chapter;
-    this.dom.city.textContent = point.city;
+    const cityChars = this._splitCity(point.city);
     this.dom.label.textContent = point.label;
     this.dom.text.textContent = point.text;
+    const rule = this.root.querySelector('.scene__rule');
 
-    // Particles
     this._setupParticles(point.scene);
 
     document.body.classList.add('is-locked');
     this.root.classList.add('is-open');
     this.root.setAttribute('aria-hidden', 'false');
 
+    // Reset for entrance
+    gsap.set([this.dom.chapter, this.dom.label, this.dom.text], { opacity: 0, y: 14 });
+    gsap.set(rule, { scaleX: 0, transformOrigin: 'left center' });
+    gsap.set(cityChars, { opacity: 0, y: 12 });
+
     gsap.fromTo(this.bg, { opacity: 0 }, { opacity: 1, duration: 1, ease: 'power2.out' });
+
+    const tl = gsap.timeline({ delay: 0.5 });   // wait for clip-path open
+    tl.to(this.dom.chapter, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 0)
+      .to(cityChars,        { opacity: 1, y: 0, duration: 0.5, stagger: 0.04, ease: 'power3.out' }, 0.18)
+      .to(rule,             { scaleX: 1, duration: 0.55, ease: 'power2.out' }, 0.55)
+      .to(this.dom.label,   { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 0.7)
+      .to(this.dom.text,    { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 0.85);
   }
 
   close() {
     return new Promise(resolve => {
-      gsap.to(this.bg, {
-        opacity: 0,
-        duration: 0.6,
-        ease: 'power2.in',
-        onComplete: () => {
-          this.root.classList.remove('is-open');
-          this.root.setAttribute('aria-hidden', 'true');
-          document.body.classList.remove('is-locked');
-          this._teardownParticles();
-          resolve();
-        }
+      const rule = this.root.querySelector('.scene__rule');
+      gsap.to([this.dom.chapter, this.dom.city.querySelectorAll('.char'), this.dom.label, this.dom.text, rule], {
+        opacity: 0, duration: 0.3, ease: 'power2.in'
       });
+      this.root.classList.remove('is-open');
+      this.root.setAttribute('aria-hidden', 'true');
+      // The clip-path closes in 0.8s (CSS); resolve after that
+      setTimeout(() => {
+        document.body.classList.remove('is-locked');
+        this._teardownParticles();
+        resolve();
+      }, 800);
     });
   }
 
-  /** Switch to next/prev without closing back to globe */
-  showAt(index) {
+  /** Switch to next/prev without closing back to globe — slide cards L<->R. */
+  showAt(index, direction = +1) {
     const wrap = (i) => (i + this.points.length) % this.points.length;
     const target = this.points[wrap(index)];
     this._activeIndex = wrap(index);
 
-    // Cross-fade card content
-    gsap.to([this.dom.chapter, this.dom.city, this.dom.label, this.dom.text], {
-      opacity: 0, duration: 0.3, ease: 'power2.in',
+    const card = this.root.querySelector('.scene__card');
+    const slideOutTo = direction > 0 ? -80 : 80;
+    const slideInFrom = direction > 0 ? 80  : -80;
+
+    // Slide current card out
+    gsap.to(card, {
+      x: slideOutTo, opacity: 0, duration: 0.35, ease: 'power2.in',
       onComplete: () => {
+        // Swap content
         this.root.dataset.scene = target.scene;
         this.dom.chapter.textContent = target.chapter;
-        this.dom.city.textContent = target.city;
+        const cityChars = this._splitCity(target.city);
         this.dom.label.textContent = target.label;
         this.dom.text.textContent = target.text;
-        gsap.fromTo([this.dom.chapter, this.dom.city, this.dom.label, this.dom.text],
-          { opacity: 0, y: 12 },
-          { opacity: 1, y: 0, duration: 0.45, stagger: 0.06, ease: 'power2.out' });
+        const rule = this.root.querySelector('.scene__rule');
+
+        gsap.set([this.dom.chapter, this.dom.label, this.dom.text], { opacity: 0, y: 14 });
+        gsap.set(rule, { scaleX: 0 });
+        gsap.set(cityChars, { opacity: 0, y: 12 });
+
+        gsap.fromTo(card, { x: slideInFrom, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: 'power3.out' });
+
+        gsap.to(this.dom.chapter, { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' });
+        gsap.to(cityChars,        { opacity: 1, y: 0, duration: 0.45, stagger: 0.035, ease: 'power3.out', delay: 0.1 });
+        gsap.to(rule,             { scaleX: 1, duration: 0.45, ease: 'power2.out', delay: 0.35 });
+        gsap.to(this.dom.label,   { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out', delay: 0.45 });
+        gsap.to(this.dom.text,    { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out', delay: 0.55 });
       }
     });
 
     // Crossfade background
     gsap.to(this.bg, {
-      opacity: 0, duration: 0.4,
+      opacity: 0, duration: 0.35, ease: 'power2.in',
       onComplete: () => {
         this.bg.style.background = SCENE_BACKGROUNDS[target.scene] || SCENE_BACKGROUNDS.home;
         gsap.fromTo(this.bg, { opacity: 0 }, { opacity: 1, duration: 0.7, ease: 'power2.out' });
