@@ -39,7 +39,9 @@ export class Globe {
       alpha: true,
       powerPreference: 'high-performance'
     });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // Cap pixel ratio at 1.5 — full DPR doubles GPU pixels for marginal gain
+    // and is the single biggest cause of jank on the globe.
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     this.renderer.setSize(w, h);
     this.container.appendChild(this.renderer.domElement);
 
@@ -591,6 +593,33 @@ export class Globe {
     });
   }
   resumeAutoRotate() { this._autoRotate = true; }
+
+  /**
+   * Stop the render loop and pause every continuous GSAP timeline (marker
+   * pulses, arc comets). Use when the globe section is off-screen so the
+   * GPU and main thread are free for scroll work elsewhere.
+   */
+  pause() {
+    if (this._paused || this._disposed) return;
+    this._paused = true;
+    this.renderer.setAnimationLoop(null);
+    // Pause every running gsap tween that's targeting one of our objects
+    this.scene.traverse(obj => {
+      if (obj.material) gsap.getTweensOf(obj.material).forEach(t => t.pause());
+      gsap.getTweensOf(obj.scale).forEach(t => t.pause());
+      gsap.getTweensOf(obj).forEach(t => t.pause());
+    });
+  }
+  resume() {
+    if (!this._paused || this._disposed) return;
+    this._paused = false;
+    this.renderer.setAnimationLoop(this._animate);
+    this.scene.traverse(obj => {
+      if (obj.material) gsap.getTweensOf(obj.material).forEach(t => t.resume());
+      gsap.getTweensOf(obj.scale).forEach(t => t.resume());
+      gsap.getTweensOf(obj).forEach(t => t.resume());
+    });
+  }
 
   flashMarker(point) {
     const m = this.markers.find(mm => mm.point === point);

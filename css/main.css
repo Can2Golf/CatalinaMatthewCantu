@@ -48,6 +48,14 @@ body {
   overflow-x: hidden;
 }
 body.is-locked { overflow: hidden; }
+
+/* ---- Performance: skip rendering for off-screen sections ---- */
+.people, .rsvp, .site-footer, #wedding-details, #save-the-date {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+/* day-timeline is excluded — its pinned scrubbed scroll relies on layout
+   knowing the section's full height ahead of time. */
 img, svg, canvas { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
@@ -371,9 +379,9 @@ input, select, textarea { font: inherit; color: inherit; }
   width: 36px; height: 36px;
   border-radius: 50%;
   border: 1px solid var(--gold);
-  background: rgba(10, 20, 40, .55);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  /* Solid-ish bg instead of backdrop-filter — blur-behind is one of the
+     most expensive things to composite during scroll. */
+  background: rgba(8, 14, 28, .82);
   font-family: var(--font-body);
   font-weight: 500;
   font-size: .82rem;
@@ -698,32 +706,7 @@ input, select, textarea { font: inherit; color: inherit; }
   gap: clamp(.8rem, 2.5vw, 2rem);
   font-variant-numeric: tabular-nums;
 }
-.countdown__cell {
-  display: flex; flex-direction: column; align-items: center;
-  min-width: 5rem;
-  padding: 1rem 1.2rem;
-  border: 1px solid var(--line);
-  background: rgba(13, 31, 60, .35);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border-radius: 6px;
-}
-.countdown__num {
-  font-family: var(--font-serif);
-  font-weight: 500;
-  font-size: clamp(2rem, 4vw, 2.8rem);
-  color: var(--gold-light);
-  line-height: 1;
-  letter-spacing: .04em;
-}
-.countdown__label {
-  font-family: var(--font-body);
-  font-size: .58rem;
-  letter-spacing: .35em;
-  text-transform: uppercase;
-  color: var(--text-mute);
-  margin-top: .55rem;
-}
+/* (.countdown__cell rules removed — flip-clock replaced this) */
 
 /* ==========================================================================
    SECTION 5 — OUR PEOPLE

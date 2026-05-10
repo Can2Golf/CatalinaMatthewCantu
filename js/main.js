@@ -125,6 +125,20 @@ function mountGlobe() {
     }
   });
 
+  // Pause the globe's render loop and pulse animations when it's off-screen
+  // to free the GPU + main thread for scroll work elsewhere on the page.
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) globeInstance?.resume();
+        else globeInstance?.pause();
+      }
+    }, { rootMargin: '100px 0px 100px 0px', threshold: 0 });
+    io.observe($globe);
+    // Start paused — first ScrollTrigger onEnter resumes via revealMarkers
+    globeInstance.pause();
+  }
+
   sceneManager = new SceneManager({
     root: $sceneRoot,
     bg: $sceneBg,

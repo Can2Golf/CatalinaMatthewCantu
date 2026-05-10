@@ -1,19 +1,10 @@
 // The Day Timeline — stacking cards on scroll.
 //
-// Layout:
-//   #day-timeline
-//     .day-timeline__header (normal flow)
-//     .day-stack (height: 100vh, overflow: hidden)
-//       .day-card[1..N]   (absolutely positioned, layered)
+// Single pinned ScrollTrigger driving one timeline. Card 2..N each take
+// 1/(N-1) of the timeline to slide their translateY from 100% -> 0%.
+// Content reveals fire via tl.call() at the right progress points.
 //
-// Behavior:
-//   - Pin .day-stack while the user scrolls (N-1) viewport heights.
-//   - Cards 2..N start translateY(100%) (offscreen below) and animate to 0
-//     each across one viewport's worth of scroll, in sequence.
-//   - When each card lands (progress = 1), its content reveals: time fades up,
-//     icon strokes draw in, name + sub fade in, divider scales out from center.
-//
-// The first card's content reveals on initial enter.
+// One trigger means one set of scroll handlers per frame, instead of N+1.
 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -26,12 +17,11 @@ export function initDayTimeline() {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (reduce) {
-    // Reduced motion: cards collapse into a vertical stack via CSS overrides.
     cards.forEach(card => animateCardIn(card, /*instant*/ true));
     return;
   }
 
-  // Reveal first card's content on entry
+  // Reveal first card on initial entry to the stack
   ScrollTrigger.create({
     trigger: section,
     start: 'top 70%',
@@ -39,57 +29,35 @@ export function initDayTimeline() {
     onEnter: () => animateCardIn(cards[0])
   });
 
-  // Pin the stack while user scrolls (N-1) viewports
-  const totalCards = cards.length;
-  ScrollTrigger.create({
-    trigger: stack,
-    start: 'top top',
-    end: () => `+=${(totalCards - 1) * window.innerHeight}`,
-    pin: true,
-    pinSpacing: true,
-    invalidateOnRefresh: true
-  });
-
-  // Each subsequent card slides up from below as the user scrolls past its
-  // segment of the pinned section. We use scrub for the y movement, and a
-  // separate ScrollTrigger to fire content reveals when the card lands.
-  cards.forEach((card, i) => {
-    if (i === 0) return;
-    const segStart = (i - 1) * window.innerHeight;
-    const segEnd   = i * window.innerHeight;
-
-    gsap.fromTo(card,
-      { y: '100%' },
-      {
-        y: '0%',
-        ease: 'none',
-        scrollTrigger: {
-          trigger: stack,
-          start: () => `top+=${segStart} top`,
-          end:   () => `top+=${segEnd} top`,
-          scrub: 1,
-          invalidateOnRefresh: true
-        }
-      }
-    );
-
-    // When this card has fully covered the previous (progress > 0.85),
-    // play its content arrival animation. Reverse it on scroll back.
-    let played = false;
-    ScrollTrigger.create({
+  // One timeline drives the whole stack
+  const segments = cards.length - 1;       // number of card transitions
+  const tl = gsap.timeline({
+    scrollTrigger: {
       trigger: stack,
-      start: () => `top+=${segStart + window.innerHeight * 0.65} top`,
-      end:   () => `top+=${segEnd} top`,
-      onEnter: () => { if (!played) { animateCardIn(card); played = true; } },
-      onLeaveBack: () => { played = false; resetCardIn(card); }
-    });
+      start: 'top top',
+      end: () => `+=${segments * window.innerHeight}`,
+      pin: true,
+      pinSpacing: true,
+      scrub: true,                        // tied directly to scroll, no smoothing inertia
+      anticipatePin: 1
+    }
   });
 
-  // Refresh ScrollTrigger after layout settles (fonts, images, viewport)
-  setTimeout(() => ScrollTrigger.refresh(), 600);
+  // For each card after the first, slide it from y:100% -> 0% over 1 unit
+  cards.slice(1).forEach((card, i) => {
+    tl.fromTo(card, { y: '100%' }, { y: '0%', ease: 'none', duration: 1 }, i);
+
+    // Fire the card's content reveal once it has covered ~85% of the way.
+    // Forward = onEnter; backward = un-reveal so re-scrolling re-plays it.
+    tl.call(() => animateCardIn(card),    null, i + 0.85);
+    tl.call(() => resetCardIn(card),      null, i + 0.05);
+  });
 }
 
 function animateCardIn(card, instant = false) {
+  if (card.dataset.revealed === '1' && !instant) return;
+  card.dataset.revealed = '1';
+
   const time = card.querySelector('.day-card__time');
   const rule = card.querySelector('.day-card__rule');
   const icon = card.querySelector('.line-icon');
@@ -104,18 +72,20 @@ function animateCardIn(card, instant = false) {
     return;
   }
 
-  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-  tl.fromTo(time, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7 }, 0)
-    .fromTo(rule, { scaleX: 0, transformOrigin: 'center' }, { scaleX: 1, duration: 0.55 }, 0.25)
-    .fromTo(wrap, { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0.4)
-    .fromTo(name, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.65 }, 0.6)
-    .fromTo(sub,  { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.6 }, 0.78);
+  const t = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  t.fromTo(time, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 }, 0)
+   .fromTo(rule, { scaleX: 0, transformOrigin: 'center' }, { scaleX: 1, duration: 0.45 }, 0.2)
+   .fromTo(wrap, { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.32)
+   .fromTo(name, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.55 }, 0.45)
+   .fromTo(sub,  { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.55 }, 0.6);
 
-  // Icon stroke draw-in (CSS handles the actual stroke transition)
-  setTimeout(() => icon?.classList.add('is-drawn'), 500);
+  setTimeout(() => icon?.classList.add('is-drawn'), 380);
 }
 
 function resetCardIn(card) {
+  if (card.dataset.revealed !== '1') return;
+  card.dataset.revealed = '';
+
   const time = card.querySelector('.day-card__time');
   const rule = card.querySelector('.day-card__rule');
   const icon = card.querySelector('.line-icon');

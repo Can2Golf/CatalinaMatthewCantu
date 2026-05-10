@@ -51,12 +51,18 @@ export function initHeroVideo() {
     });
   }
 
-  // 3. Pause the bg video when off-screen to save battery + bandwidth
-  if (heroVideo && 'IntersectionObserver' in window) {
+  // 3. Pause every <video> on the hero (bg + 3 thumbnails) when off-screen
+  // — that's 4 simultaneous H.264 decoders, which is the single biggest
+  // cause of jank on weaker devices once the user scrolls away from the hero.
+  const allHeroVideos = hero.querySelectorAll('video');
+  if (allHeroVideos.length && 'IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
       for (const e of entries) {
-        if (e.isIntersecting) heroVideo.play?.().catch(() => {});
-        else heroVideo.pause?.();
+        if (e.isIntersecting) {
+          allHeroVideos.forEach(v => v.play?.().catch(() => {}));
+        } else {
+          allHeroVideos.forEach(v => v.pause?.());
+        }
       }
     }, { threshold: 0.05 });
     io.observe(hero);
