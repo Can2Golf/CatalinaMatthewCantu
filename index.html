@@ -9,7 +9,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Pinyon+Script&family=Allura&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Great+Vibes&display=swap" />
 
   <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -29,36 +29,66 @@
     <div class="hero__photo" role="img" aria-label="Matthew and Catalina walking together on a winter evening"></div>
     <div class="hero__overlay"></div>
 
-    <!-- decorative lantern post silhouettes -->
-    <svg class="hero__lantern hero__lantern--left" viewBox="0 0 40 260" aria-hidden="true">
-      <path d="M20 0 L20 260 M5 8 L35 8 M8 14 C8 28 32 28 32 14 Z" stroke="currentColor" stroke-width="1" fill="none"/>
-    </svg>
-    <svg class="hero__lantern hero__lantern--right" viewBox="0 0 40 260" aria-hidden="true">
-      <path d="M20 0 L20 260 M5 8 L35 8 M8 14 C8 28 32 28 32 14 Z" stroke="currentColor" stroke-width="1" fill="none"/>
-    </svg>
-
     <div class="hero__inner">
+
+      <!-- Monogram: M & C interlocking -->
+      <svg class="hero__monogram reveal" viewBox="0 0 200 110" aria-hidden="true">
+        <defs>
+          <linearGradient id="goldFoil" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%"  stop-color="#E8CB91"/>
+            <stop offset="50%" stop-color="#B08F52"/>
+            <stop offset="100%" stop-color="#7A6135"/>
+          </linearGradient>
+        </defs>
+        <g fill="none" stroke="url(#goldFoil)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Left flourish -->
+          <path d="M8 60 Q24 38 50 50"/>
+          <!-- M -->
+          <path d="M48 78 L52 32 L74 70 L96 32 L100 78"/>
+          <!-- Ampersand serif join -->
+          <path d="M104 56 Q116 40 130 50 Q146 62 130 76 Q120 84 110 76"/>
+          <!-- C -->
+          <path d="M170 38 Q146 36 144 60 Q142 84 170 82"/>
+          <!-- Right flourish -->
+          <path d="M192 60 Q176 38 150 50"/>
+          <!-- Tiny dot accents -->
+          <circle cx="6"   cy="60" r="1.6" fill="url(#goldFoil)" stroke="none"/>
+          <circle cx="194" cy="60" r="1.6" fill="url(#goldFoil)" stroke="none"/>
+        </g>
+      </svg>
+
+      <p class="hero__eyebrow reveal">Together with their families</p>
+
       <h1 class="hero__title">
-        <span class="hero__name">MATTHEW</span>
-        <span class="hero__amp" aria-hidden="true">&amp;</span>
+        <span class="hero__name reveal">Matthew</span>
+        <span class="hero__amp reveal" aria-hidden="true">&amp;</span>
         <span class="sr-only">and</span>
-        <span class="hero__name">CATALINA</span>
+        <span class="hero__name reveal">Catalina</span>
       </h1>
 
-      <p class="hero__date">MAY 21, 2027</p>
+      <div class="hero__rule reveal" aria-hidden="true">
+        <span class="hero__rule-line"></span>
+        <span class="hero__rule-diamond"></span>
+        <span class="hero__rule-line"></span>
+      </div>
 
-      <div id="countdown" class="countdown" aria-live="polite">
+      <p class="hero__date reveal">The Twenty&#x2011;First of May &middot; Two Thousand &amp; Twenty&#x2011;Seven</p>
+      <p class="hero__location reveal">Austin, Texas</p>
+
+      <div id="countdown" class="countdown reveal" aria-live="polite">
         <div class="countdown__block"><span class="countdown__num" data-unit="days">000</span><span class="countdown__label">Days</span></div>
-        <span class="countdown__sep">:</span>
+        <span class="countdown__sep" aria-hidden="true"></span>
         <div class="countdown__block"><span class="countdown__num" data-unit="hours">00</span><span class="countdown__label">Hours</span></div>
-        <span class="countdown__sep">:</span>
+        <span class="countdown__sep" aria-hidden="true"></span>
         <div class="countdown__block"><span class="countdown__num" data-unit="minutes">00</span><span class="countdown__label">Minutes</span></div>
-        <span class="countdown__sep">:</span>
+        <span class="countdown__sep" aria-hidden="true"></span>
         <div class="countdown__block"><span class="countdown__num" data-unit="seconds">00</span><span class="countdown__label">Seconds</span></div>
       </div>
+
     </div>
 
     <a href="#story" class="hero__scroll" aria-label="Scroll to our love story">
+      <span class="hero__scroll-label">Scroll</span>
       <span class="hero__scroll-line"></span>
     </a>
   </header>
@@ -66,9 +96,12 @@
   <!-- ======================= OUR LOVE STORY ======================= -->
   <section id="story" class="story">
     <div class="story__container">
-      <h2 class="story__title reveal">
-        <span>OUR</span><span>LOVE</span><span>STORY</span>
-      </h2>
+      <header class="story__lede">
+        <p class="spread__eyebrow reveal">Chapter One</p>
+        <h2 class="story__title reveal">Our Love Story</h2>
+        <p class="story__deck reveal">A poetry class. An ice storm. A door opening in Austin. A snowfall in Central Park. <em>This is how it began.</em></p>
+        <span class="ornament reveal" aria-hidden="true"></span>
+      </header>
 
       <ol class="timeline" aria-label="Our love story, told as a timeline">
 
@@ -126,86 +159,53 @@
   <section id="ceremony" class="ceremony">
     <div class="ceremony__container">
 
-      <h2 class="ceremony__title reveal"><span class="script">The</span><br/><span class="script script--lg">Ceremony</span></h2>
+      <header class="spread__header reveal">
+        <p class="spread__eyebrow">Part I</p>
+        <h2 class="spread__heading">
+          <span class="script">The</span>
+          <span class="script script--lg">Ceremony</span>
+        </h2>
+        <span class="ornament" aria-hidden="true"></span>
+      </header>
 
-      <div class="card-row">
-        <article class="card reveal">
-          <svg class="card__icon" viewBox="0 0 80 80" aria-hidden="true">
-            <path d="M40 8 L40 24 M32 16 L48 16" stroke="currentColor" stroke-width="1.2" fill="none"/>
-            <path d="M20 72 L20 38 L40 22 L60 38 L60 72 Z" stroke="currentColor" stroke-width="1.2" fill="none"/>
-            <rect x="36" y="52" width="8" height="20" stroke="currentColor" stroke-width="1" fill="none"/>
-            <circle cx="40" cy="42" r="3" stroke="currentColor" stroke-width="1" fill="none"/>
-            <path d="M28 48 L28 60 M52 48 L52 60" stroke="currentColor" stroke-width="1" fill="none"/>
-          </svg>
-          <h3 class="card__title">Ceremony Venue</h3>
-          <p class="card__body">
-            <span class="card__highlight">2:30 PM &ndash; 3:30 PM</span><br/>
-            Saint Mary's Cathedral<br/>
-            203 E 10th St. Austin, TX 78701
-          </p>
-        </article>
+      <article class="spread reveal">
+        <div class="spread__photo spread__photo--church" role="img" aria-label="Saint Mary's Cathedral, Austin"></div>
+        <div class="spread__details">
+          <p class="spread__time">Two-Thirty in the Afternoon</p>
+          <h3 class="spread__venue">Saint Mary's Cathedral</h3>
+          <p class="spread__address">203 East 10th Street &middot; Austin, Texas 78701</p>
 
-        <article class="card reveal">
-          <svg class="card__icon" viewBox="0 0 80 80" aria-hidden="true">
-            <path d="M40 12 L32 24 L40 36 L48 24 Z" stroke="currentColor" stroke-width="1.2" fill="none"/>
-            <path d="M32 24 L20 44 L20 72 L60 72 L60 44 L48 24" stroke="currentColor" stroke-width="1.2" fill="none"/>
-            <path d="M40 36 L40 72" stroke="currentColor" stroke-width="1" fill="none"/>
-            <path d="M34 48 L40 44 L46 48" stroke="currentColor" stroke-width="1" fill="none"/>
-          </svg>
-          <h3 class="card__title">Attire</h3>
-          <p class="card__body">
-            <span class="card__highlight">Black Tie</span><br/>
-            As we gather for our wedding in a Roman Catholic Church, we kindly ask that everyone dress respectfully to honor the sacred setting. Your thoughtful attire will help make our day even more special.
-          </p>
-        </article>
+          <dl class="spread__meta">
+            <div><dt>Service</dt><dd>2:30 &ndash; 3:30 PM &middot; Roman Catholic mass</dd></div>
+            <div><dt>Attire</dt><dd>Black Tie &middot; please dress respectfully for the Cathedral</dd></div>
+            <div><dt>Post&#x2011;Ceremony</dt><dd>The wedding party will take photographs &mdash; please refresh, enjoy a passed h'or d'oeuvre, and travel onward to the reception</dd></div>
+          </dl>
+        </div>
+      </article>
 
-        <article class="card reveal">
-          <svg class="card__icon" viewBox="0 0 80 80" aria-hidden="true">
-            <circle cx="40" cy="30" r="14" stroke="currentColor" stroke-width="1.2" fill="none"/>
-            <path d="M40 44 L40 72 M32 56 L48 56" stroke="currentColor" stroke-width="1" fill="none"/>
-            <path d="M28 24 C26 20 30 18 32 22 M48 22 C50 18 54 20 52 24 M40 18 C38 14 42 12 44 16" stroke="currentColor" stroke-width="1" fill="none"/>
-            <circle cx="32" cy="30" r="2" fill="currentColor"/>
-            <circle cx="40" cy="26" r="2" fill="currentColor"/>
-            <circle cx="48" cy="30" r="2" fill="currentColor"/>
-          </svg>
-          <h3 class="card__title">Post-Ceremony</h3>
-          <p class="card__body">
-            While we (the wedding party) take photos, and love to give you time to refresh your makeup, grab a hor d'oeuvre bite, and get ready for the reception.
-          </p>
-        </article>
-      </div>
+      <header class="spread__header spread__header--small reveal">
+        <p class="spread__eyebrow">Part II</p>
+        <h2 class="spread__heading">
+          <span class="script">The</span>
+          <span class="script script--lg">Reception</span>
+        </h2>
+        <span class="ornament" aria-hidden="true"></span>
+      </header>
 
-      <h2 class="ceremony__title ceremony__title--small reveal"><span class="script">The</span><br/><span class="script script--lg">Reception</span></h2>
+      <article class="spread spread--reverse reveal">
+        <div class="spread__photo spread__photo--villa" role="img" aria-label="Stonehouse Villa in Driftwood, Texas"></div>
+        <div class="spread__details">
+          <p class="spread__time">Four-Thirty Until Eleven</p>
+          <h3 class="spread__venue">Stonehouse Villa</h3>
+          <p class="spread__address">Driftwood, Texas &middot; Texas Hill Country</p>
 
-      <div class="card-row card-row--two">
-        <article class="card reveal">
-          <svg class="card__icon" viewBox="0 0 80 80" aria-hidden="true">
-            <path d="M12 40 L40 18 L68 40" stroke="currentColor" stroke-width="1.2" fill="none"/>
-            <path d="M16 40 L16 68 L64 68 L64 40" stroke="currentColor" stroke-width="1.2" fill="none"/>
-            <rect x="34" y="48" width="12" height="20" stroke="currentColor" stroke-width="1" fill="none"/>
-            <path d="M40 18 L40 10 M36 10 L44 10" stroke="currentColor" stroke-width="1" fill="none"/>
-            <path d="M24 52 L28 52 M52 52 L56 52" stroke="currentColor" stroke-width="1" fill="none"/>
-          </svg>
-          <h3 class="card__title">Reception Venue</h3>
-          <p class="card__body">
-            <span class="card__highlight">4:30 PM &ndash; 11 PM</span><br/>
-            Stonehouse Villa<br/>
-            Driftwood, TX
-          </p>
-        </article>
-
-        <article class="card reveal">
-          <svg class="card__icon" viewBox="0 0 80 80" aria-hidden="true">
-            <path d="M40 14 L34 20 L36 28 L30 36 L32 46 L24 66 L56 66 L48 46 L50 36 L44 28 L46 20 Z" stroke="currentColor" stroke-width="1.2" fill="none"/>
-            <path d="M36 28 L44 28 M32 46 L48 46" stroke="currentColor" stroke-width="1" fill="none"/>
-            <circle cx="40" cy="14" r="2" stroke="currentColor" stroke-width="1" fill="none"/>
-          </svg>
-          <h3 class="card__title">Attire</h3>
-          <p class="card__body">
-            Gentlemen are encouraged to wear tuxedos while ladies may opt for elegant evening gowns or formal dresses. We can't wait to celebrate with everyone dressed to the nines!
-          </p>
-        </article>
-      </div>
+          <dl class="spread__meta">
+            <div><dt>Hours</dt><dd>4:30 PM &mdash; 11:00 PM</dd></div>
+            <div><dt>Attire</dt><dd>Gentlemen in tuxedos &middot; ladies in evening gowns or formal dresses</dd></div>
+            <div><dt>Includes</dt><dd>Cocktail hour &middot; dinner &middot; toasts &middot; dancing &middot; late-night bite</dd></div>
+          </dl>
+        </div>
+      </article>
 
     </div>
   </section>
@@ -213,27 +213,33 @@
   <!-- ======================= SCHEDULE OF EVENTS ======================= -->
   <section id="schedule" class="schedule">
     <div class="schedule__container">
-      <h2 class="schedule__title reveal"><span class="script script--lg">Schedule of Events</span></h2>
 
-      <div class="schedule__grid">
+      <header class="spread__header reveal">
+        <p class="spread__eyebrow">Part III</p>
+        <h2 class="spread__heading">
+          <span class="script script--lg">Schedule of Events</span>
+        </h2>
+        <span class="ornament ornament--light" aria-hidden="true"></span>
+      </header>
+
+      <div class="schedule__card reveal">
         <ol class="schedule__list">
           <li class="schedule__row reveal"><span class="schedule__time">1:30 PM</span><span class="schedule__event">Arrival &amp; Welcome</span></li>
           <li class="schedule__row reveal"><span class="schedule__time">2:00 PM</span><span class="schedule__event">Ceremony Begins</span></li>
           <li class="schedule__row reveal"><span class="schedule__time">4:00 PM</span><span class="schedule__event">Wedding Party Photo Session &middot; Guest Meets</span></li>
           <li class="schedule__row reveal"><span class="schedule__time">4:30 PM</span><span class="schedule__event">Reception Hall Opens &middot; Cocktail Hour</span></li>
           <li class="schedule__row reveal"><span class="schedule__time">5:30 PM</span><span class="schedule__event">Grand Entrance</span></li>
-          <li class="schedule__row reveal"><span class="schedule__time">6:45 PM</span><span class="schedule__event">Blessing + Dinner Service</span></li>
-          <li class="schedule__row reveal"><span class="schedule__time">6:45 PM</span><span class="schedule__event">Wedding Party Toasts</span></li>
-          <li class="schedule__row reveal"><span class="schedule__time">7:00 PM</span><span class="schedule__event">First Dance</span></li>
-          <li class="schedule__row reveal"><span class="schedule__time">7:15 PM</span><span class="schedule__event">Father-Daughter Dance</span></li>
-          <li class="schedule__row reveal"><span class="schedule__time">7:30 PM</span><span class="schedule__event">Mother-Son Dance</span></li>
-          <li class="schedule__row reveal"><span class="schedule__time">7:35 PM</span><span class="schedule__event">Open Dancing Begins</span></li>
+          <li class="schedule__row reveal"><span class="schedule__time">6:45 PM</span><span class="schedule__event">Blessing &amp; Dinner Service</span></li>
+          <li class="schedule__row reveal"><span class="schedule__time">7:00 PM</span><span class="schedule__event">Wedding Party Toasts</span></li>
+          <li class="schedule__row reveal"><span class="schedule__time">7:15 PM</span><span class="schedule__event">First Dance</span></li>
+          <li class="schedule__row reveal"><span class="schedule__time">7:25 PM</span><span class="schedule__event">Father&#x2011;Daughter Dance</span></li>
+          <li class="schedule__row reveal"><span class="schedule__time">7:35 PM</span><span class="schedule__event">Mother&#x2011;Son Dance</span></li>
+          <li class="schedule__row reveal"><span class="schedule__time">7:45 PM</span><span class="schedule__event">Open Dancing Begins</span></li>
           <li class="schedule__row reveal"><span class="schedule__time">8:30 PM</span><span class="schedule__event">Cake Cutting</span></li>
-          <li class="schedule__row reveal"><span class="schedule__time">11:00 PM</span><span class="schedule__event">Late Night Snack</span></li>
+          <li class="schedule__row reveal"><span class="schedule__time">11:00 PM</span><span class="schedule__event">Late&#x2011;Night Bite</span></li>
         </ol>
-
-        <div class="schedule__photo reveal" role="img" aria-label="A floral centerpiece at the reception"></div>
       </div>
+
     </div>
   </section>
 
@@ -271,17 +277,18 @@
     </svg>
 
     <div class="registry__inner reveal">
-      <h2 class="registry__title">Your presence is truly the best gift we could ask for.</h2>
+      <p class="spread__eyebrow">A Note on Gifts</p>
+      <h2 class="registry__title">
+        Your presence<br/>
+        <span class="script">is</span> the gift.
+      </h2>
       <p class="registry__body">
-        But if you feel called to give a little something, we've put together a registry with some of our most wished-for items, setting us up for our future home, honeymoon, and family.
-      </p>
-      <p class="registry__body">
-        We love you and your support as we begin our married life &mdash; a contribution to our future would mean so much.
+        Should you feel called to give a little something more, we have curated a small registry with our most-wished-for things &mdash; for our first home, our honeymoon, and the chapters yet to come.
       </p>
       <p class="registry__body registry__body--emph">Thank you for being part of this milestone with us.</p>
 
       <a class="btn btn--pill btn--registry" href="#" data-registry-url="#" aria-label="Open our wedding registry">
-        OUR REGISTRY
+        Visit Our Registry
       </a>
     </div>
   </section>
@@ -289,11 +296,10 @@
   <!-- ======================= FAQ ======================= -->
   <section id="faq" class="faq">
     <div class="faq__container">
-      <h2 class="faq__title reveal">
-        <span>FREQUENTLY</span>
-        <span>ASKED</span>
-        <span>QUESTIONS</span>
-      </h2>
+      <header class="faq__heading reveal">
+        <p class="spread__eyebrow">Helpful to Know</p>
+        <h2 class="faq__title">Frequently Asked</h2>
+      </header>
 
       <div class="faq__list">
         <details class="faq__item reveal" open>
@@ -333,16 +339,16 @@
     <div class="get-in-touch__overlay"></div>
 
     <div class="get-in-touch__container">
-      <h2 class="get-in-touch__title reveal">GET IN TOUCH</h2>
+      <p class="spread__eyebrow spread__eyebrow--light reveal">With love</p>
+      <h2 class="get-in-touch__title reveal"><span class="script">from</span> Matthew &amp; Catalina</h2>
 
       <div class="contact-grid">
         <a class="contact reveal" href="mailto:catalinamatthewcantu@gmail.com">
-          <span class="contact__name">Matthew &amp; Catalina</span>
           <span class="contact__email">catalinamatthewcantu@gmail.com</span>
         </a>
       </div>
 
-      <button class="btn btn--pill btn--rsvp reveal" type="button" id="open-rsvp">RSVP</button>
+      <button class="btn btn--pill btn--rsvp reveal" type="button" id="open-rsvp">Kindly Respond</button>
     </div>
 
     <footer class="site-footer">
@@ -355,8 +361,9 @@
     <div class="modal__backdrop" data-close-modal></div>
     <div class="modal__panel">
       <button class="modal__close" type="button" data-close-modal aria-label="Close">&times;</button>
-      <h2 class="modal__title script script--lg" id="rsvp-modal-title">Kindly Respond</h2>
-      <p class="modal__subtitle">Please RSVP by April 21, 2027.</p>
+      <p class="modal__eyebrow">M &amp; C &middot; 21 May 2027</p>
+      <h2 class="modal__title script" id="rsvp-modal-title">Kindly Respond</h2>
+      <p class="modal__subtitle">Please reply on or before the twenty&#x2011;first of April, 2027.</p>
 
       <form class="rsvp-form" id="rsvp-form" action="mailto:catalinamatthewcantu@gmail.com" method="post" enctype="text/plain">
         <div class="field">
