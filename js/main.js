@@ -289,6 +289,31 @@ function setupScrollReveals() {
     }
   });
 
+  // Registry — header fade + cards rise + line-icon stroke-draw
+  ScrollTrigger.create({
+    trigger: '#registry',
+    start: 'top 75%',
+    once: true,
+    onEnter: () => {
+      gsap.fromTo('.registry__header > *',
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.65, stagger: 0.08, ease: 'power3.out' }
+      );
+      gsap.fromTo('.registry__card',
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: 'power3.out', delay: 0.25 }
+      );
+      // Stagger the SVG strokes drawing in
+      document.querySelectorAll('.registry__card .line-icon').forEach((svg, i) => {
+        setTimeout(() => svg.classList.add('is-drawn'), 600 + i * 180);
+      });
+      gsap.fromTo('.registry__footnote',
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', delay: 0.9 }
+      );
+    }
+  });
+
   ScrollTrigger.create({
     trigger: '#rsvp-form',
     start: 'top 80%',
